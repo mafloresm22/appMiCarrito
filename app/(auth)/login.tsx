@@ -8,16 +8,19 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
+  View
 } from 'react-native';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import CustomAlert from '../../components/customAlert';
 import { SocialIcons } from '../../constants/images';
+import { APP_MESSAGES } from '../../constants/mensajes';
+import { supabase } from '../../services/supabase';
 
 const { width, height } = Dimensions.get('window');
 
@@ -28,12 +31,35 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+  const [alertConfig, setAlertConfig] = useState({
+    visible: false,
+    title: '',
+    message: '',
+    type: 'info' as any,
+    icon: '',
+    color: '#000',
+    onClose: () => { },
+  });
+
+  const showAlert = (config: any, onOk?: () => void) => {
+    setAlertConfig({
+      visible: true,
+      title: config.title,
+      message: config.message,
+      type: config.type,
+      icon: config.icon,
+      color: config.color,
+      onClose: () => {
+        setAlertConfig(prev => ({ ...prev, visible: false }));
+        if (onOk) onOk();
+      }
+    });
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        {/* Teal Header with Pattern (Simulated with Colors) */}
         <View style={styles.headerBackground}>
-          {/* Simulated Pattern Icons */}
           <MaterialCommunityIcons name="food-apple" size={24} color="rgba(255,255,255,0.2)" style={{ position: 'absolute', top: 50, left: 20 }} />
           <MaterialCommunityIcons name="carrot" size={24} color="rgba(255,255,255,0.2)" style={{ position: 'absolute', top: 80, right: 40 }} />
           <MaterialCommunityIcons name="food-croissant" size={24} color="rgba(255,255,255,0.2)" style={{ position: 'absolute', top: 150, left: 50 }} />
@@ -47,10 +73,11 @@ export default function LoginScreen() {
               style={styles.logoContainer}
             >
               <View style={styles.cartIconContainer}>
-                <Ionicons name="cart" size={60} color="#fff" />
-                <View style={styles.cartGroceries}>
-                  <MaterialCommunityIcons name="leaf" size={20} color="#fff" style={{ position: 'absolute', top: -10 }} />
-                </View>
+                <Image
+                  source={SocialIcons.MiCarrito}
+                  style={{ width: 100, height: 100 }}
+                  resizeMode="contain"
+                />
               </View>
               <Text style={styles.title}>MiCarrito</Text>
               <Text style={styles.subtitle}>Tu mercado, organizado</Text>
@@ -105,31 +132,31 @@ export default function LoginScreen() {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.forgotPassword}>
-              <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
-            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.loginButton}
+              activeOpacity={0.8}
+              onPress={async () => {
+                if (!email || !password) {
+                  showAlert(APP_MESSAGES.AUTH.FIELDS_REQUIRED);
+                  return;
+                }
 
-            {/* Login Button */}
-            <TouchableOpacity style={styles.loginButton} activeOpacity={0.8}>
+                const { error } = await supabase.auth.signInWithPassword({
+                  email,
+                  password,
+                });
+
+                if (error) {
+                  showAlert(APP_MESSAGES.AUTH.LOGIN_ERROR);
+                } else {
+                  showAlert(APP_MESSAGES.AUTH.LOGIN_SUCCESS, () => {
+                    router.replace('/(tabs)');
+                  });
+                }
+              }}
+            >
               <Text style={styles.loginButtonText}>Iniciar Sesión   <Ionicons name="arrow-forward" size={18} color="#fff" /> </Text>
             </TouchableOpacity>
-
-            {/* Social Divider */}
-            <View style={styles.dividerContainer}>
-              <View style={styles.dividerLine} />
-              <Text style={styles.dividerText}>O CONÉCTATE CON</Text>
-              <View style={styles.dividerLine} />
-            </View>
-
-            {/* Social Buttons with Local Images */}
-            <View style={styles.socialContainer}>
-              <TouchableOpacity style={styles.socialButton}>
-                <Image source={SocialIcons.google} style={styles.socialIcon} />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.socialButton}>
-                <Image source={SocialIcons.facebook} style={styles.socialIcon} />
-              </TouchableOpacity>
-            </View>
 
             {/* Footer */}
             <View style={styles.footer}>
@@ -140,6 +167,7 @@ export default function LoginScreen() {
             </View>
           </Animated.View>
         </KeyboardAvoidingView>
+        <CustomAlert {...alertConfig} />
       </View>
     </TouchableWithoutFeedback>
   );

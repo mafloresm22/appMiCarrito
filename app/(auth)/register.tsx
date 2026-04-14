@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
+  Alert,
   Dimensions,
   Keyboard,
   KeyboardAvoidingView,
@@ -14,9 +15,12 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { supabase } from '../../services/supabase';
 
 import { useIsFocused } from '@react-navigation/native';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import CustomAlert from '../../components/customAlert';
+import { APP_MESSAGES } from '../../constants/mensajes';
 
 const { width, height } = Dimensions.get('window');
 
@@ -27,6 +31,32 @@ export default function RegisterScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  
+  // Estado para el Alert Personalizado
+  const [alertConfig, setAlertConfig] = useState({
+    visible: false,
+    title: '',
+    message: '',
+    type: 'info' as any,
+    icon: '',
+    color: '#000',
+    onClose: () => {},
+  });
+
+  const showAlert = (config: any, onOk?: () => void) => {
+    setAlertConfig({
+      visible: true,
+      title: config.title,
+      message: config.message,
+      type: config.type,
+      icon: config.icon,
+      color: config.color,
+      onClose: () => {
+        setAlertConfig(prev => ({ ...prev, visible: false }));
+        if (onOk) onOk();
+      }
+    });
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -54,9 +84,9 @@ export default function RegisterScreen() {
           style={styles.keyboardView}
         >
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center', paddingBottom: 40 }}>
-            <Animated.View 
+            <Animated.View
               key={`register-card-${isFocused}`}
-              entering={FadeInUp.delay(400)} 
+              entering={FadeInUp.delay(400)}
               style={styles.card}
             >
               {/* Name Input */}
@@ -107,7 +137,37 @@ export default function RegisterScreen() {
                 </TouchableOpacity>
               </View>
 
-              <TouchableOpacity style={styles.registerButton} activeOpacity={0.8}>
+              <TouchableOpacity
+                style={styles.registerButton}
+                activeOpacity={0.8}
+                onPress={async () => {
+                  if (!email || !password || !name) {
+                    showAlert(APP_MESSAGES.AUTH.FIELDS_REQUIRED);
+                    return;
+                  }
+
+                  const { data, error } = await supabase.auth.signUp({
+                    email,
+                    password,
+                    options: {
+                      data: {
+                        full_name: name,
+                      }
+                    }
+                  });
+
+                  if (error) {
+                    showAlert({
+                      ...APP_MESSAGES.AUTH.LOGIN_ERROR,
+                      message: error.message
+                    });
+                  } else {
+                    showAlert(APP_MESSAGES.AUTH.REGISTER_SUCCESS, () => {
+                      router.replace('/(auth)/login');
+                    });
+                  }
+                }}
+              >
                 <Text style={styles.registerButtonText}>Registrarse   <Ionicons name="person-add" size={18} color="#fff" /> </Text>
               </TouchableOpacity>
 
@@ -120,6 +180,7 @@ export default function RegisterScreen() {
             </Animated.View>
           </ScrollView>
         </KeyboardAvoidingView>
+      <CustomAlert {...alertConfig} />
       </View>
     </TouchableWithoutFeedback>
   );
