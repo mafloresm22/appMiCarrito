@@ -19,14 +19,14 @@ export function useProfile() {
                 const metadataUsername = user.user_metadata?.username || user.user_metadata?.full_name || 'Usuario';
 
                 if (error) {
-                    console.log('Error fetching profile:', error);
+                    console.log('Error al encontrar el nombre de usuario:', error);
                     setProfile({ username: metadataUsername });
                 } else {
                     setProfile({ username: data?.username || metadataUsername });
                 }
             }
         } catch (error) {
-            console.log('Error getting user:', error);
+            console.log('Error al obtener el usuario:', error);
         } finally {
             setLoading(false);
         }
