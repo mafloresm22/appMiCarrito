@@ -152,8 +152,8 @@ export default function LoginScreen() {
                 if (error) {
                   showAlert({
                     ...APP_MESSAGES.AUTH.LOGIN_ERROR,
-                    message: error.message === 'Invalid login credentials' 
-                      ? APP_MESSAGES.AUTH.LOGIN_ERROR.message 
+                    message: error.message === 'Invalid login credentials'
+                      ? APP_MESSAGES.AUTH.LOGIN_ERROR.message
                       : error.message
                   });
                 } else {
