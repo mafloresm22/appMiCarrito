@@ -2,7 +2,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  Alert,
   Dimensions,
   Keyboard,
   KeyboardAvoidingView,
@@ -13,7 +12,7 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
+  View
 } from 'react-native';
 import { supabase } from '../../services/supabase';
 
@@ -31,7 +30,7 @@ export default function RegisterScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  
+
   // Estado para el Alert Personalizado
   const [alertConfig, setAlertConfig] = useState({
     visible: false,
@@ -40,7 +39,7 @@ export default function RegisterScreen() {
     type: 'info' as any,
     icon: '',
     color: '#000',
-    onClose: () => {},
+    onClose: () => { },
   });
 
   const showAlert = (config: any, onOk?: () => void) => {
@@ -152,6 +151,7 @@ export default function RegisterScreen() {
                     options: {
                       data: {
                         full_name: name,
+                        username: name,
                       }
                     }
                   });
@@ -180,7 +180,7 @@ export default function RegisterScreen() {
             </Animated.View>
           </ScrollView>
         </KeyboardAvoidingView>
-      <CustomAlert {...alertConfig} />
+        <CustomAlert {...alertConfig} />
       </View>
     </TouchableWithoutFeedback>
   );

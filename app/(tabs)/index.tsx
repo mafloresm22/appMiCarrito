@@ -1,6 +1,6 @@
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Dimensions,
     ScrollView,
@@ -16,11 +16,14 @@ import CustomAlert from '../../components/customAlert';
 import { APP_MESSAGES } from '../../constants/mensajes';
 import { supabase } from '../../services/supabase';
 
+import { useProfile } from '../../hooks/perfil';
+
 const { height } = Dimensions.get('window');
 
 export default function HomeScreen() {
     const router = useRouter();
     const [lists, setLists] = useState([]);
+    const { profile } = useProfile();
 
     const [alertConfig, setAlertConfig] = useState({
         visible: false,
@@ -66,7 +69,7 @@ export default function HomeScreen() {
                     <SafeAreaView edges={['top']}>
                         <View style={styles.headerTop}>
                             <View style={styles.headerInfo}>
-                                <Text style={styles.welcomeText}>¡Hola de nuevo!</Text>
+                                <Text style={styles.welcomeText}>¡Hola, {profile.username || 'Usuario'}!</Text>
                                 <Text style={styles.headerTitle}>Mi<Text style={{ fontWeight: '800' }}>Carrito</Text></Text>
                             </View>
                             <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>

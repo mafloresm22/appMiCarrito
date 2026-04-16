@@ -141,13 +141,21 @@ export default function LoginScreen() {
                   return;
                 }
 
+                const trimmedEmail = email.trim();
+                const trimmedPassword = password.trim();
+
                 const { error } = await supabase.auth.signInWithPassword({
-                  email,
-                  password,
+                  email: trimmedEmail,
+                  password: trimmedPassword,
                 });
 
                 if (error) {
-                  showAlert(APP_MESSAGES.AUTH.LOGIN_ERROR);
+                  showAlert({
+                    ...APP_MESSAGES.AUTH.LOGIN_ERROR,
+                    message: error.message === 'Invalid login credentials' 
+                      ? APP_MESSAGES.AUTH.LOGIN_ERROR.message 
+                      : error.message
+                  });
                 } else {
                   showAlert(APP_MESSAGES.AUTH.LOGIN_SUCCESS, () => {
                     router.replace('/(tabs)');
