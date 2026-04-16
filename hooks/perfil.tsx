@@ -16,13 +16,13 @@ export function useProfile() {
                     .eq('id_perfil', user.id)
                     .maybeSingle();
 
+                const metadataUsername = user.user_metadata?.username || user.user_metadata?.full_name || 'Usuario';
+
                 if (error) {
                     console.log('Error fetching profile:', error);
-                    setProfile({ username: user.user_metadata?.full_name || 'Usuario' });
-                } else if (data) {
-                    setProfile({ username: data.username });
+                    setProfile({ username: metadataUsername });
                 } else {
-                    setProfile({ username: user.user_metadata?.full_name || 'Usuario' });
+                    setProfile({ username: data?.username || metadataUsername });
                 }
             }
         } catch (error) {
