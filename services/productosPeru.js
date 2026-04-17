@@ -1,151 +1,50 @@
-/**
- * Catálogo de productos optimizado con iconos de alta calidad (MaterialCommunityIcons)
- * Se han seleccionado nombres de iconos descriptivos y modernos para una mejor experiencia visual.
- */
+export const productosPeru = [
+    // --- LÁCTEOS Y DERIVADOS ---
+    { id: '1', nombre: 'Leche Gloria', marca: 'Gloria', categoria: 'Lácteos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/17798060-800-800.webp' },
+    { id: '2', nombre: 'Leche Evaporada Light', marca: 'Gloria', categoria: 'Lácteos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Leche%20Evaporada%20Light.webp' },
+    { id: '3', nombre: 'Yogurt Fresa 1kg', marca: 'Gloria', categoria: 'Lácteos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Yogurt%20Fresa%201kg.webp' },
+    { id: '4', nombre: 'Mantequilla con Sal 200g', marca: 'Laive', categoria: 'Lácteos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Mantequilla%20con%20Sal%20200g.png' },
+    { id: '5', nombre: 'Queso Edam Tajado', marca: 'Laive', categoria: 'Lácteos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Queso%20Edam%20Tajado.webp' },
+    { id: '6', nombre: 'Leche Condensada 393g', marca: 'Nestlé', categoria: 'Lácteos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Leche%20Condensada%20393g.webp' },
+    { id: '7', nombre: 'Mezcla Lactea Reina del Campo', marca: 'Gloria', categoria: 'Lácteos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Mezcla%20Lactea%20Reina%20del%20Campo.webp' },
 
-const productosPeruBase = [
-  // LÁCTEOS (Gloria, Laive, Ideal)
-  { id_api: 'L01', nombre: 'Leche Evaporada Entera 400g', marca: 'Gloria', icono: 'cow', categoria: 'Lácteos' },
-  { id_api: 'L02', nombre: 'Leche Evaporada Descremada 400g', marca: 'Gloria', icono: 'cow', categoria: 'Lácteos' },
-  { id_api: 'L03', nombre: 'Leche Evaporada Light 400g', marca: 'Gloria', icono: 'cow', categoria: 'Lácteos' },
-  { id_api: 'L04', nombre: 'Leche Fresca UHT Entera 1L', marca: 'Laive', icono: 'bottle-wine-outline', categoria: 'Lácteos' },
-  { id_api: 'L05', nombre: 'Yogurt Bebible Fresa 1kg', marca: 'Gloria', icono: 'cup-water', categoria: 'Lácteos' },
-  { id_api: 'L06', nombre: 'Yogurt Griego Natural 500g', marca: 'Tottus', icono: 'cup-water', categoria: 'Lácteos' },
-  { id_api: 'L07', nombre: 'Mantequilla con Sal 200g', marca: 'Gloria', icono: 'clover', categoria: 'Lácteos' },
-  { id_api: 'L08', nombre: 'Queso Edam Tajado 200g', marca: 'Laive', icono: 'cheese', categoria: 'Lácteos' },
-  { id_api: 'L09', nombre: 'Mezcla Láctea Reforzada 400g', marca: 'Ideal', icono: 'cow', categoria: 'Lácteos' },
-  { id_api: 'L10', nombre: 'Leche Condensada 395g', marca: 'Nestlé', icono: 'cup-water', categoria: 'Lácteos' },
+    // --- ABARROTES BÁSICOS ---
+    { id: '8', nombre: 'Arroz Costeño', marca: 'Costeño', categoria: 'Abarrotes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/433778.webp' },
+    { id: '9', nombre: 'Arroz Superior 1kg', marca: 'Paisana', categoria: 'Abarrotes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Arroz%20Superior%201kg.webp' },
+    { id: '10', nombre: 'Aceite Vegetal Premium 1L', marca: 'Primor', categoria: 'Abarrotes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Aceite%20Vegetal%20Premium%201L.webp' },
+    { id: '11', nombre: 'Aceite de Girasol 1L', marca: 'Cocinero', categoria: 'Abarrotes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Aceite%20de%20Girasol%201L.webp' },
+    { id: '12', nombre: 'Azucar Rubia 1kg', marca: 'Dulfina', categoria: 'Abarrotes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Azucar%20Rubia%201kg.webp' },
+    { id: '13', nombre: 'Fideos Canuto 500g', marca: 'Don Vittorio', categoria: 'Abarrotes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Fideos%20Canuto%20500g.webp' },
+    { id: '14', nombre: 'Fideos Spaghetti 500g', marca: 'Lavaggi', categoria: 'Abarrotes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Fideos%20Spaghetti%20500g.webp' },
+    { id: '15', nombre: 'Fideos Codito 500g', marca: 'Molitalia', categoria: 'Abarrotes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Fideos%20Codito%20500g.webp' },
+    { id: '16', nombre: 'Sal de Mesa 1kg', marca: 'EMSAL', categoria: 'Abarrotes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Sal%20de%20Mesa%201kg.webp' },
+    { id: '17', nombre: 'Harina Preparada 1kg', marca: 'Blanca Flor', categoria: 'Abarrotes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Harina%20Preparada%201kg.png' },
 
-  // ABARROTES (Arroz, Aceite, Fideos, Menestras)
-  { id_api: 'A01', nombre: 'Arroz Extra Costeño 1kg', marca: 'Costeño', icono: 'barley', categoria: 'Abarrotes' },
-  { id_api: 'A02', nombre: 'Arroz Superior Paisana 1kg', marca: 'Paisana', icono: 'barley', categoria: 'Abarrotes' },
-  { id_api: 'A03', nombre: 'Aceite Vegetal Premium 1L', marca: 'Primor', icono: 'oil', categoria: 'Abarrotes' },
-  { id_api: 'A04', nombre: 'Aceite de Girasol 1L', marca: 'Cil', icono: 'oil', categoria: 'Abarrotes' },
-  { id_api: 'A05', nombre: 'Fideos Canuto Grande 500g', marca: 'Don Vittorio', icono: 'pasta', categoria: 'Abarrotes' },
-  { id_api: 'A06', nombre: 'Fideos Spaghetti 500g', marca: 'Molitalia', icono: 'pasta', categoria: 'Abarrotes' },
-  { id_api: 'A07', nombre: 'Lenteja de la Sierra 500g', marca: 'Costeño', icono: 'dots-grid', categoria: 'Abarrotes' },
-  { id_api: 'A08', nombre: 'Frijol Canario 500g', marca: 'Paisana', icono: 'dots-grid', categoria: 'Abarrotes' },
-  { id_api: 'A09', nombre: 'Azúcar Rubia Bolsa 1kg', marca: 'Paramonga', icono: 'shaker-outline', categoria: 'Abarrotes' },
-  { id_api: 'A10', nombre: 'Sal de Mesa 1kg', marca: 'Emsal', icono: 'shaker-outline', categoria: 'Abarrotes' },
-  { id_api: 'A11', nombre: 'Atún Trozos en Aceite', marca: 'Primor', icono: 'fish', categoria: 'Abarrotes' },
-  { id_api: 'A12', nombre: 'Avena precocida 500g', marca: '3 Ositos', icono: 'barley', categoria: 'Abarrotes' },
-  { id_api: 'A13', nombre: 'Mayonesa Original 200g', marca: 'Alacena', icono: 'bottle-tonic-outline', categoria: 'Abarrotes' },
-  { id_api: 'A14', nombre: 'Salsa de Tomate 200g', marca: 'Pomarola', icono: 'food-apple', categoria: 'Abarrotes' },
-  { id_api: 'A15', nombre: 'Harina sin Preparar 1kg', marca: 'Blanca Flor', icono: 'cube-outline', categoria: 'Abarrotes' },
+    // --- CONSERVAS Y ENLATADOS ---
+    { id: '18', nombre: 'Atun Trozos en Aceite', marca: 'Primor', categoria: 'Conservas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Atun%20Trozos%20en%20Aceite.webp' },
+    { id: '19', nombre: 'Filete de Atun', marca: 'Fanny', categoria: 'Conservas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Filete%20de%20Atun.jpg' },
+    { id: '20', nombre: 'Grated de Sardina', marca: 'Compass', categoria: 'Conservas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Grated%20de%20Sardina.webp' },
 
-  // BEBIDAS (Inca Kola, Coca Cola, Aguas, Pulps)
-  { id_api: 'B01', nombre: 'Gaseosa Inca Kola 2.25L', marca: 'Inca Kola', icono: 'bottle-soda-classic', categoria: 'Bebidas' },
-  { id_api: 'B02', nombre: 'Gaseosa Coca Cola Sin Azúcar 2.25L', marca: 'Coca Cola', icono: 'bottle-soda-classic', categoria: 'Bebidas' },
-  { id_api: 'B03', nombre: 'Agua Mineral Sin Gas 2.5L', marca: 'Cielo', icono: 'water-outline', categoria: 'Bebidas' },
-  { id_api: 'B04', nombre: 'Agua de Manantial 1.5L', marca: 'San Mateo', icono: 'water-outline', categoria: 'Bebidas' },
-  { id_api: 'B05', nombre: 'Néctar de Durazno 1L', marca: 'Pulp', icono: 'juice', categoria: 'Bebidas' },
-  { id_api: 'B06', nombre: 'Bebida Rehidratante 500ml', marca: 'Sporade', icono: 'lightning-bolt', categoria: 'Bebidas' },
-  { id_api: 'B07', nombre: 'Cerveza Pilsen Callao 630ml', marca: 'Backus', icono: 'glass-mug', categoria: 'Bebidas' },
-  { id_api: 'B08', nombre: 'Vino Tinto Borgoña 750ml', marca: 'Santiagoirolo', icono: 'bottle-wine', categoria: 'Bebidas' },
+    // --- BEBIDAS Y GASEOSAS ---
+    { id: '21', nombre: 'Gaseosa Inca Kola 2.25L', marca: 'Inca Kola', categoria: 'Bebidas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Gaseosa%20Inca%20Kola%202.25L.webp' },
+    { id: '22', nombre: 'Gaseosa Coca Cola 2.25L', marca: 'Coca Cola', categoria: 'Bebidas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Gaseosa%20Coca%20Cola%202.25L.webp' },
+    { id: '23', nombre: 'Agua Mineral Sin Gas 2.5L', marca: 'San Mateo', categoria: 'Bebidas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Agua%20Mineral%20Sin%20Gas%202.5L.webp' },
+    { id: '24', nombre: 'Cerveza Pilsen Callao 630ml', marca: 'Pilsen', categoria: 'Bebidas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Cerveza%20Pilsen%20Callao%20630ml.jpg' },
+    { id: '25', nombre: 'Jugo de Naranja 1L', marca: 'Frugos', categoria: 'Bebidas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Jugo%20de%20Naranja%201L.webp' },
 
-  // LIMPIEZA
-  { id_api: 'LM01', nombre: 'Detergente Active Care 1kg', marca: 'Bolívar', icono: 'washing-machine', categoria: 'Limpieza' },
-  { id_api: 'LM02', nombre: 'Detergente Multiacción 1kg', marca: 'Opal', icono: 'washing-machine', categoria: 'Limpieza' },
-  { id_api: 'LM03', nombre: 'Lavavajilla en Crema Limón', marca: 'Ayudín', icono: 'dishwasher', categoria: 'Limpieza' },
-  { id_api: 'LM04', nombre: 'Limpiador Multiusos 900ml', marca: 'Poett', icono: 'spray', categoria: 'Limpieza' },
-  { id_api: 'LM05', nombre: 'Lejía Tradicional 1L', marca: 'Clorox', icono: 'bottle-tonic-skull', categoria: 'Limpieza' },
-  { id_api: 'LM06', nombre: 'Papel Higiénico 4 rollos', marca: 'Elite', icono: 'roll-paper', categoria: 'Limpieza' },
-  { id_api: 'LM07', nombre: 'Suavizante para Ropa 1L', marca: 'Suavitel', icono: 'flower-outline', categoria: 'Limpieza' },
-  { id_api: 'LM08', nombre: 'Bolsas de Basura Grande', marca: 'Ziploc', icono: 'delete-empty', categoria: 'Limpieza' },
+    // --- DESAYUNO Y SNACKS ---
+    { id: '26', nombre: 'Cafe Instantaneo 200g', marca: 'Nescafé', categoria: 'Desayuno', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Cafe%20Instantaneo%20200g.webp' },
+    { id: '27', nombre: 'Milo en Polvo 400g', marca: 'Nestlé', categoria: 'Desayuno', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Milo%20en%20Polvo%20400g.webp' },
+    { id: '28', nombre: 'Avena precocida 300g', marca: 'Quaker', categoria: 'Desayuno', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Avena%20precocida%20300g.jpg' },
+    { id: '29', nombre: 'Mermelada de Fresa 320g', marca: 'Gloria', categoria: 'Desayuno', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Mermelada%20de%20Fresa%20320g.webp' },
+    { id: '30', nombre: 'Galletas Soda Field', marca: 'Field', categoria: 'Snacks', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Galletas%20Soda%20Field.webp' },
+    { id: '31', nombre: 'Galletas Casino Menta', marca: 'Victoria', categoria: 'Snacks', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Galletas%20Casino%20Menta.webp' },
+    { id: '32', nombre: 'Chocolate en Barra', marca: 'Sublime', categoria: 'Snacks', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Chocolate%20en%20Barra.webp' },
 
-  // SNACKS Y GALLETAS
-  { id_api: 'S01', nombre: 'Galletas Soda Paquete x6', marca: 'Field', icono: 'cookie', categoria: 'Snacks' },
-  { id_api: 'S02', nombre: 'Galletas Rellenas de Vainilla', marca: 'Casino', icono: 'cookie', categoria: 'Snacks' },
-  { id_api: 'S03', nombre: 'Papas Fritas Clásicas', marca: 'Lay\'s', icono: 'popcorn', categoria: 'Snacks' },
-  { id_api: 'S04', nombre: 'Tortillas de Maíz Queso', marca: 'Doritos', icono: 'triangle-outline', categoria: 'Snacks' },
-  { id_api: 'S05', nombre: 'Chocolate de Leche con Maní', marca: 'Sublime', icono: 'candy', categoria: 'Snacks' },
-  { id_api: 'S06', nombre: 'Barra de Cereal Chispas', marca: 'Angel', icono: 'baguette', categoria: 'Snacks' },
+    // --- LIMPIEZA Y CUIDADO PERSONAL ---
+    { id: '33', nombre: 'Detergente en Polvo 1kg', marca: 'Bolívar', categoria: 'Limpieza', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Detergente%20en%20Polvo%201kg.webp' },
+    { id: '34', nombre: 'Jabon de Tocador 125g', marca: 'Neko', categoria: 'Cuidado Personal', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Jabon%20de%20Tocador%20125g.webp' },
+    { id: '35', nombre: 'Crema Dental 75ml', marca: 'Colgate', categoria: 'Cuidado Personal', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Crema%20Dental%2075ml.png' },
+    { id: '36', nombre: 'Papel Higienico 4 rollos', marca: 'Elite', categoria: 'Limpieza', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Papel%20Higienico%204%20rollos.webp' },
 
-  // FRUTAS Y VERDURAS
-  { id_api: 'FV01', nombre: 'Plátano de Seda x 1kg', marca: 'Genérico', icono: 'fruit-cherries', categoria: 'Frutas' },
-  { id_api: 'FV02', nombre: 'Manzana Delicia x 1kg', marca: 'Genérico', icono: 'food-apple', categoria: 'Frutas' },
-  { id_api: 'FV03', nombre: 'Papaya Selva unidad', marca: 'Genérico', icono: 'fruit-watermelon', categoria: 'Frutas' },
-  { id_api: 'FV04', nombre: 'Tomate Italiano x 1kg', marca: 'Genérico', icono: 'carrot', categoria: 'Verduras' },
-  { id_api: 'FV05', nombre: 'Cebolla Roja x 1kg', marca: 'Genérico', icono: 'carrot', categoria: 'Verduras' },
-  { id_api: 'FV06', nombre: 'Papa Canchán x 1kg', marca: 'Genérico', icono: 'pot-steam', categoria: 'Verduras' },
-  { id_api: 'FV07', nombre: 'Limón Sutil x 1kg', marca: 'Genérico', icono: 'lemon', categoria: 'Verduras' },
-  { id_api: 'FV08', nombre: 'Zanahoria Entera x 1kg', marca: 'Genérico', icono: 'carrot', categoria: 'Verduras' },
-
-  // CARNES Y PESCADOS
-  { id_api: 'CP01', nombre: 'Pollo Entero con Menudencia', marca: 'San Fernando', icono: 'food-drumstick', categoria: 'Carnes' },
-  { id_api: 'CP02', nombre: 'Pechuga de Pollo 500g', marca: 'Redondos', icono: 'food-drumstick', categoria: 'Carnes' },
-  { id_api: 'CP03', nombre: 'Bistec de Res 500g', marca: 'Ganadería', icono: 'food-steak', categoria: 'Carnes' },
-  { id_api: 'CP04', nombre: 'Carne Molida Especial 500g', marca: 'Minka', icono: 'food-steak', categoria: 'Carnes' },
-  { id_api: 'CP05', nombre: 'Filete de Tilapia 500g', marca: 'Congelados', icono: 'fish', categoria: 'Carnes' },
-  { id_api: 'CP06', nombre: 'Huevos Pardos x 12 unidades', marca: 'La Calera', icono: 'egg-variant', categoria: 'Carnes' },
-  { id_api: 'CP07', nombre: 'Hot Dog de Pollo x 12', marca: 'Braedt', icono: 'food-hot-dog', categoria: 'Carnes' },
-  { id_api: 'CP08', nombre: 'Jamón del País Tajado 200g', marca: 'Zina', icono: 'food-steak', categoria: 'Carnes' },
-
-  // CUIDADO PERSONAL
-  { id_api: 'CP10', nombre: 'Shampoo Reparación Total 400ml', marca: 'Elvive', icono: 'bottle-tonic-plus-outline', categoria: 'Personal' },
-  { id_api: 'CP11', nombre: 'Jabón de Tocador Cremoso', marca: 'Dove', icono: 'soap', categoria: 'Personal' },
-  { id_api: 'CP12', nombre: 'Pasta Dental Triple Acción', marca: 'Colgate', icono: 'toothbrush-paste', categoria: 'Personal' },
-  { id_api: 'CP13', nombre: 'Desodorante Aerosol Hombre', marca: 'Rexona', icono: 'spray', categoria: 'Personal' },
 ];
-
-/**
- * Función generadora optimizada con variedad de iconos temáticos
- */
-const generarMasRecursos = () => {
-  const adicionales = [];
-  const marcasAbarrotes = ['Costeño', 'Paisana', 'Don Vittorio', 'Molitalia', 'Primor', 'Nicolini', 'Bolívar'];
-  const tiposFideos = ['Spaghetti', 'Tornillo', 'Codito', 'Cabello de Angel', 'Linguini', 'Canuto', 'Fettuccine'];
-
-  // Generar 100 variaciones de Abarrotes
-  for (let i = 1; i <= 100; i++) {
-    const marca = marcasAbarrotes[Math.floor(Math.random() * marcasAbarrotes.length)];
-    const fideo = tiposFideos[Math.floor(Math.random() * tiposFideos.length)];
-    adicionales.push({
-      id_api: `GEN-A-${i}`,
-      nombre: `Fideos ${fideo} ${marca} ${250 + (i * 10)}g`,
-      marca: marca,
-      icono: 'pasta',
-      categoria: 'Abarrotes'
-    });
-  }
-
-  // Generar 100 variaciones de Bebidas
-  const sabores = ['Fresa', 'Mango', 'Durazno', 'Piña', 'Maracuyá', 'Limón', 'Naranja'];
-  for (let i = 1; i <= 100; i++) {
-    const sabor = sabores[Math.floor(Math.random() * sabores.length)];
-    adicionales.push({
-      id_api: `GEN-B-${i}`,
-      nombre: `Jugo de ${sabor} Refrescante ${500 + (i * 5)}ml`,
-      marca: 'Selva',
-      icono: 'bottle-wine-outline',
-      categoria: 'Bebidas'
-    });
-  }
-
-  // Generar 100 variaciones de Snacks
-  for (let i = 1; i <= 100; i++) {
-    adicionales.push({
-      id_api: `GEN-S-${i}`,
-      nombre: `Snack Crujiente Sabor Mix ${i}`,
-      marca: 'Karinto',
-      icono: 'cookie',
-      categoria: 'Snacks'
-    });
-  }
-
-  // Generar 150 variaciones de Limpieza/Hogar
-  for (let i = 1; i <= 150; i++) {
-    adicionales.push({
-      id_api: `GEN-L-${i}`,
-      nombre: `Limpiador Perfumado Fragancia ${i}`,
-      marca: 'Sapolio',
-      icono: 'spray',
-      categoria: 'Limpieza'
-    });
-  }
-
-  return adicionales;
-};
-
-export const productosPeru = [...productosPeruBase, ...generarMasRecursos()];
-export default productosPeru;

@@ -1,9 +1,11 @@
+// app/(tabs)/crear.tsx
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
     ActivityIndicator,
     FlatList,
+    Image,
     Keyboard,
     StyleSheet,
     Text,
@@ -12,7 +14,8 @@ import {
     View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { productosPeru } from '../../services/productosPeru';
+// IMPORTAMOS TU LISTA LOCAL
+import { productosPeru } from '../../services/ProductosPeru';
 
 export default function CrearListaScreen() {
     const router = useRouter();
@@ -25,32 +28,41 @@ export default function CrearListaScreen() {
 
         Keyboard.dismiss();
         setLoading(true);
-        try {
-            // Filtrado local en la lista de productos de Perú
-            const results = productosPeru.filter(p => 
-                p.nombre.toLowerCase().includes(query.toLowerCase()) ||
-                p.marca.toLowerCase().includes(query.toLowerCase())
+
+        // Simulamos una carga pequeña para que se sienta fluido
+        setTimeout(() => {
+            const queryLower = query.toLowerCase();
+            const results = productosPeru.filter(p =>
+                p.nombre.toLowerCase().includes(queryLower) ||
+                p.marca.toLowerCase().includes(queryLower)
             );
             setProductos(results);
-        } catch (error) {
-            console.error(error);
-        } finally {
             setLoading(false);
-        }
+        }, 300);
     };
 
     const renderItem = ({ item }: { item: any }) => (
         <View style={styles.card}>
             <View style={styles.imagePlaceholder}>
-                <MaterialCommunityIcons 
-                    name={item.icono || 'package-variant'} 
-                    size={40} 
-                    color="#16a34a" 
-                />
+                {item.imagen ? (
+                    <Image
+                        source={{ uri: item.imagen }}
+                        style={styles.productImage}
+                        resizeMode="contain"
+                    />
+                ) : (
+                    <MaterialCommunityIcons
+                        name="package-variant"
+                        size={40}
+                        color="#16a34a"
+                    />
+                )}
             </View>
             <View style={styles.cardInfo}>
-                <Text style={styles.productName} numberOfLines={2}>{item.nombre}</Text>
-                <Text style={styles.productBrand}>{item.marca}</Text>
+                <View>
+                    <Text style={styles.productName} numberOfLines={2}>{item.nombre}</Text>
+                    <Text style={styles.productBrand}>{item.marca}</Text>
+                </View>
                 <TouchableOpacity style={styles.addBtn}>
                     <Ionicons name="add-circle" size={24} color="#16a34a" />
                     <Text style={styles.addBtnText}>Añadir</Text>
@@ -74,21 +86,31 @@ export default function CrearListaScreen() {
                     <Ionicons name="search" size={20} color="#94a3b8" />
                     <TextInput
                         style={styles.input}
-                        placeholder="Buscar producto (ej: Atún, Leche...)"
+                        placeholder="Buscar producto (ej: Gloria, Arroz...)"
                         value={query}
-                        onChangeText={setQuery}
+                        onChangeText={(text) => {
+                            setQuery(text);
+                            // Opcional: Búsqueda en tiempo real
+                            if (text.length > 2) {
+                                const qL = text.toLowerCase();
+                                const r = productosPeru.filter(p =>
+                                    p.nombre.toLowerCase().includes(qL) ||
+                                    p.marca.toLowerCase().includes(qL)
+                                );
+                                setProductos(r);
+                            } else if (text.length === 0) {
+                                setProductos([]);
+                            }
+                        }}
                         onSubmitEditing={handleSearch}
                         returnKeyType="search"
                     />
                     {query.length > 0 && (
-                        <TouchableOpacity onPress={() => setQuery('')}>
+                        <TouchableOpacity onPress={() => { setQuery(''); setProductos([]); }}>
                             <Ionicons name="close-circle" size={20} color="#94a3b8" />
                         </TouchableOpacity>
                     )}
                 </View>
-                <TouchableOpacity style={styles.searchBtn} onPress={handleSearch}>
-                    <Text style={styles.searchBtnText}>Explorar</Text>
-                </TouchableOpacity>
             </View>
 
             {loading ? (
@@ -99,7 +121,7 @@ export default function CrearListaScreen() {
             ) : productos.length > 0 ? (
                 <FlatList
                     data={productos}
-                    keyExtractor={(item) => item.id_api}
+                    keyExtractor={(item) => item.id.toString()}
                     renderItem={renderItem}
                     contentContainerStyle={styles.listPadding}
                     showsVerticalScrollIndicator={false}
@@ -202,6 +224,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#f1f5f9',
         justifyContent: 'center',
         alignItems: 'center',
+        overflow: 'hidden',
+    },
+    productImage: {
+        width: '100%',
+        height: '100%',
     },
     cardInfo: {
         flex: 1,
