@@ -47,4 +47,69 @@ export const productosPeru = [
     { id: '35', nombre: 'Crema Dental 75ml', marca: 'Colgate', categoria: 'Cuidado Personal', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Crema%20Dental%2075ml.png' },
     { id: '36', nombre: 'Papel Higienico 4 rollos', marca: 'Elite', categoria: 'Limpieza', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Papel%20Higienico%204%20rollos.webp' },
 
+    // --- CARNES Y POLLOS ---
+    { id: '37', nombre: 'Pollo Entero con Menudencia', marca: 'Granja', categoria: 'Carnes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Pollo%20Entero%20con%20Menudencia.webp' },
+    { id: '38', nombre: 'Pechuga de Pollo', marca: 'Granja', categoria: 'Carnes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Pechuga%20de%20Pollo.webp' },
+    { id: '39', nombre: 'Bistec de Res', marca: 'Carnicería', categoria: 'Carnes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Bistec%20de%20Res.webp' },
+    { id: '40', nombre: 'Carne Molida', marca: 'Carnicería', categoria: 'Carnes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Carne%20Molida.jpg' },
+    { id: '41', nombre: 'Chuleta de Cerdo', marca: 'Carnicería', categoria: 'Carnes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Chuleta%20de%20Cerdo.webp' },
+    { id: '42', nombre: 'Higado de Res', marca: 'Carnicería', categoria: 'Carnes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Higado%20de%20Res.jpg' },
+    { id: '43', nombre: 'Panceta de Cerdo', marca: 'Carnicería', categoria: 'Carnes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Panceta%20de%20Cerdo.webp' },
+
+    // --- EMBUTIDOS Y PREPARADOS ---
+    { id: '44', nombre: 'Hot Dog de Pollo', marca: 'San Fernando', categoria: 'Embutidos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Hot%20Dog%20de%20Pollo.webp' },
+    { id: '45', nombre: 'Jamon', marca: 'Braedt', categoria: 'Embutidos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Jamon.jpg' },
+    { id: '46', nombre: 'Chorizo Parrillero', marca: 'Otto Kunz', categoria: 'Embutidos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Chorizo%20Parrillero.jpg' },
+    { id: '47', nombre: 'Salchicha Huachana', marca: 'Casera', categoria: 'Embutidos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Salchicha%20Huachana.jpg' },
+    { id: '48', nombre: 'Hamburguesa de Carne', marca: 'San Fernando', categoria: 'Preparados', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Hamburguesa%20de%20Carne.webp' },
+    { id: '49', nombre: 'Nuggets de Pollo', marca: 'Laive', categoria: 'Preparados', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Nuggets%20de%20Pollo.webp' },
+
+    // --- AJÍES, SALSAS Y ADEREZOS ---
+    { id: '50', nombre: 'Aji Panca Molido', marca: 'Sibarita', categoria: 'Aderezos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Aji%20Panca%20Molido.webp' },
+    { id: '51', nombre: 'Aji Amarillo Molido', marca: 'Sibarita', categoria: 'Aderezos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Aji%20Amarillo%20Molido.jpg' },
+    { id: '52', nombre: 'Ajo Sacha Molido', marca: 'Sibarita', categoria: 'Aderezos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Ajo%20Sacha%20Molido.jpg' },
+    { id: '53', nombre: 'Salsa de Tomate', marca: 'Pomarola', categoria: 'Aderezos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Salsa%20de%20Tomate.webp' },
+    { id: '54', nombre: 'Mayonesa', marca: 'Alacena', categoria: 'Salsas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Mayonesa.webp' },
+    { id: '55', nombre: 'Crema de Aji', marca: 'Alacena', categoria: 'Salsas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Crema%20de%20Aji.webp' },
+    { id: '56', nombre: 'Salsa Huancaina', marca: 'Alacena', categoria: 'Salsas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Salsa%20Huancaina.webp' },
+    { id: '57', nombre: 'Ketchup', marca: 'Alacena', categoria: 'Salsas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Ketchup.jpg' },
+    { id: '58', nombre: 'Vinagre Tinto', marca: 'Sello Rojo', categoria: 'Aderezos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Vinagre%20Tinto.jpg' },
+    { id: '59', nombre: 'Sillao', marca: 'Kikko', categoria: 'Aderezos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Sillao.jpg' },
+    { id: '60', nombre: 'Tuco Tallarines', marca: 'Sibarita', categoria: 'Aderezos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Tuco%20Tallarines.webp' },
+
+    // --- GRANOS, MENESTRAS Y OTROS ---
+    { id: '61', nombre: 'Lenteja', marca: 'Costeño', categoria: 'Menestras', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Lenteja.jpg' },
+    { id: '62', nombre: 'Frijol Canario', marca: 'Paisana', categoria: 'Menestras', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Frijol%20Canario.jpg' },
+    { id: '63', nombre: 'Garbanzo', marca: 'Costeño', categoria: 'Menestras', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Garbanzo.jpg' },
+    { id: '64', nombre: 'Pallares', marca: 'Paisana', categoria: 'Menestras', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Pallares.jpg' },
+    { id: '65', nombre: 'Maiz Popcorn', marca: 'Casero', categoria: 'Abarrotes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Maiz%20Popcorn.jpg' },
+    { id: '66', nombre: 'Cebada Tostada', marca: 'Casero', categoria: 'Abarrotes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Cebada%20Tostada.webp' },
+
+    // --- PANADERÍA Y PASTELERÍA ---
+    { id: '67', nombre: 'Pan de Molde Blanco', marca: 'Bimbo', categoria: 'Panadería', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Pan%20de%20Molde%20Blanco.webp' },
+    { id: '68', nombre: 'Pan Integral', marca: 'Unión', categoria: 'Panadería', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Pan%20Integral.webp' },
+    { id: '69', nombre: 'Tostadas Clasicas', marca: 'Bimbo', categoria: 'Panadería', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Tostadas%20Clasicas.webp' },
+    { id: '70', nombre: 'Bizcocho con Pasas', marca: 'Todinno', categoria: 'Panadería', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Bizcocho%20con%20Pasas.jpg' },
+
+    // --- CONDIMENTOS Y ESPECIAS ---
+    { id: '71', nombre: 'Pimienta Negra Molida', marca: 'Sibarita', categoria: 'Especias', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Pimienta%20Negra%20Molida.webp' },
+    { id: '72', nombre: 'Comino Molido', marca: 'Sibarita', categoria: 'Especias', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Pimienta%20Negra%20Molida.webp' },
+    { id: '73', nombre: 'Oregano Seco', marca: 'Badia', categoria: 'Especias', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Oregano%20Seco.webp' },
+    { id: '74', nombre: 'Palillo', marca: 'Casero', categoria: 'Especias', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Palillo.jpg' },
+    { id: '75', nombre: 'Caldo de Gallina', marca: 'Maggi', categoria: 'Especias', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Caldo%20de%20Gallina.webp' },
+
+    // --- INFUSIONES Y REPOSTERÍA ---
+    { id: '76', nombre: 'Te Canela y Clavo', marca: 'McColins', categoria: 'Infusiones', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Te%20Canela%20y%20Clavo.jpg' },
+    { id: '77', nombre: 'Manzanilla Filtro', marca: 'McColins', categoria: 'Infusiones', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Manzanilla%20Filtro.jpg' },
+    { id: '78', nombre: 'Anis Filtrante', marca: 'McColins', categoria: 'Infusiones', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Anis%20Filtrante.jpg' },
+    { id: '79', nombre: 'Cocoa en Polvo', marca: 'Winters', categoria: 'Reposteria', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Cocoa%20en%20Polvo.webp' },
+    { id: '80', nombre: 'Polvo de Hornear', marca: 'Royal', categoria: 'Reposteria', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Polvo%20de%20Hornear.jpg' },
+    { id: '81', nombre: 'Esencia de Vainilla', marca: 'Negrita', categoria: 'Reposteria', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Esencia%20de%20Vainilla.jpg' },
+    { id: '82', nombre: 'Gelatina de Fresa', marca: 'Royal', categoria: 'Postres', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Gelatina%20de%20Fresa.webp' },
+    { id: '83', nombre: 'Sobre de Mazamorra Morada', marca: 'Negrita', categoria: 'Postres', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Sobre%20de%20Mazamorra%20Morada.jpg' },
+    { id: '84', nombre: 'Flan de Vainilla', marca: 'Royal', categoria: 'Postres', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Flan%20de%20Vainilla.webp' },
+
+    // --- OTROS ---
+    { id: '85', nombre: 'Huevo Rosado', marca: 'Granja', categoria: 'Abarrotes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Huevo%20Rosado.jpg' },
+    { id: '86', nombre: 'Huevo Blanco', marca: 'La Calera', categoria: 'Abarrotes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Huevo%20Blanco.jpg' }
 ];
