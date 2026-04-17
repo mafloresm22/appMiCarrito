@@ -1,6 +1,6 @@
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Dimensions,
     ScrollView,
@@ -176,7 +176,10 @@ export default function HomeScreen() {
 
             {/* Botón crear Lista */}
             <View style={styles.fabContainer}>
-                <TouchableOpacity style={styles.fab}>
+                <TouchableOpacity
+                    style={styles.fab}
+                    onPress={() => router.push('/crear' as any)}
+                >
                     <Ionicons name="add" size={35} color="#fff" />
                 </TouchableOpacity>
             </View>

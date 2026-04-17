@@ -51,6 +51,12 @@ export default function TabLayout() {
                     tabBarIcon: ({ color }) => <Ionicons name="settings" size={22} color={color} />,
                 }}
             />
+            <Tabs.Screen
+                name="crear"
+                options={{
+                    href: null,
+                }}
+            />
         </Tabs>
     );
 }
