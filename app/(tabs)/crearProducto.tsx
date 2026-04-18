@@ -3,7 +3,6 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
     ActivityIndicator,
-    Alert,
     Image,
     KeyboardAvoidingView,
     Platform,
@@ -11,10 +10,13 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
-    View,
+    View
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { supabase } from '../../services/supabase';
+import CustomAlert from '../../components/customAlert';
+import { APP_MESSAGES } from '../../constants/mensajes';
+import { useGuardarLista } from '../../hooks/guardarLista';
+import { useObtenerCategorias } from '../../hooks/obtenerCategoria';
 
 export default function CrearProductoScreen() {
     const router = useRouter();
@@ -22,16 +24,20 @@ export default function CrearProductoScreen() {
     const params = useLocalSearchParams();
 
     // Estados
-    const [categoriaId, setCategoriaId] = useState<string | null>(null);
-    const [categorias, setCategorias] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
-    const [loadingCategorias, setLoadingCategorias] = useState(true);
-
     const [itemsAgregados, setItemsAgregados] = useState<any[]>([]);
 
-    useEffect(() => {
-        getCategorias();
-    }, []);
+    const [alertConfig, setAlertConfig] = useState<any>({
+        visible: false,
+        title: '',
+        message: '',
+        type: 'success',
+        icon: 'checkmark-circle-outline',
+        color: '#16a34a',
+    });
+
+    // Custom Hooks
+    const { categorias, loadingCategorias } = useObtenerCategorias();
 
     useEffect(() => {
         // Capturar productos que vienen de buscarProducto.tsx
@@ -42,7 +48,7 @@ export default function CrearProductoScreen() {
                     const existingIds = new Set(prev.map(i => i.id));
                     const uniqueNew = newItems
                         .filter((i: any) => !existingIds.has(i.id))
-                        .map((i: any) => ({ ...i, quantity: 1 })); // Inicializar cantidad
+                        .map((i: any) => ({ ...i, quantity: 1 }));
                     return [...prev, ...uniqueNew];
                 });
             } catch (e) {
@@ -50,22 +56,6 @@ export default function CrearProductoScreen() {
             }
         }
     }, [params.items]);
-
-    async function getCategorias() {
-        try {
-            const { data, error } = await supabase
-                .from('categorias')
-                .select('*')
-                .order('nombre', { ascending: true });
-
-            if (error) throw error;
-            setCategorias(data || []);
-        } catch (error: any) {
-            console.error('Error fetching categorias:', error.message);
-        } finally {
-            setLoadingCategorias(false);
-        }
-    }
 
     const updateItemQuantity = (id: string, delta: number) => {
         setItemsAgregados(prev => prev.map(item => {
@@ -76,37 +66,32 @@ export default function CrearProductoScreen() {
         }));
     };
 
+    const { guardarProductos } = useGuardarLista();
+
+    const mostrarAlerta = (config: any) => {
+        setAlertConfig({ ...config, visible: true });
+    };
+
     const handleSave = async () => {
-        if (itemsAgregados.length === 0) {
-            Alert.alert('Error', 'Por favor selecciona productos del catálogo.');
-            return;
-        }
-
         setLoading(true);
-        try {
-            const { data: userData } = await supabase.auth.getUser();
-            const user_id = userData.user?.id;
+        const { success, error, warning } = await guardarProductos(itemsAgregados);
+        setLoading(false);
 
-            if (!user_id) throw new Error('Usuario no autenticado');
+        if (success) {
+            mostrarAlerta(APP_MESSAGES.DATABASE.SAVE_SUCCESS);
+        } else {
+            if (error === 'EMPTY') {
+                mostrarAlerta(APP_MESSAGES.DATABASE.EMPTY_LIST);
+            } else {
+                mostrarAlerta(APP_MESSAGES.DATABASE.GENERIC_ERROR);
+            }
+        }
+    };
 
-            // Preparar inserción múltiple
-            const productInserts = itemsAgregados.map(item => ({
-                nombre: item.nombre,
-                imagen_url: item.imagen,
-                user_id: user_id,
-                cantidad: item.quantity,
-                categoria_id: categoriaId, // Aplicar categoría seleccionada a todos
-            }));
-
-            const { error } = await supabase.from('productos').insert(productInserts);
-            if (error) throw error;
-
-            Alert.alert('Éxito', '¡Productos guardados correctamente!');
+    const handleAlertClose = () => {
+        setAlertConfig({ ...alertConfig, visible: false });
+        if (alertConfig.type === 'success') {
             router.replace('/(tabs)');
-        } catch (error: any) {
-            Alert.alert('Error', error.message);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -116,16 +101,13 @@ export default function CrearProductoScreen() {
 
     return (
         <View style={styles.container}>
-            {/* Header */}
             <View style={[styles.topSection, { paddingTop: insets.top }]}>
                 <View style={styles.header}>
                     <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
                         <Ionicons name="close" size={26} color="#fff" />
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>Resumen de Lista</Text>
-                    <TouchableOpacity onPress={handleSave} disabled={loading}>
-                        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveHeaderBtn}>Guardar</Text>}
-                    </TouchableOpacity>
+                    <View style={{ width: 40 }} />
                 </View>
             </View>
 
@@ -134,53 +116,23 @@ export default function CrearProductoScreen() {
                 contentContainerStyle={styles.scrollContent}
                 showsVerticalScrollIndicator={false}
             >
-                {/* Botón Buscar en Catálogo */}
                 <TouchableOpacity
                     style={styles.catalogBtn}
-                    onPress={() => router.push('/buscarProducto')}
+                    onPress={() => router.push({
+                        pathname: '/buscarProducto',
+                        params: { currentItems: JSON.stringify(itemsAgregados) }
+                    })}
                 >
                     <View style={styles.catalogIcon}>
                         <Ionicons name="search" size={24} color="#16a34a" />
                     </View>
                     <View style={{ flex: 1 }}>
-                        <Text style={styles.catalogTitle}>Añadir productos</Text>
-                        <Text style={styles.catalogSubtitle}>Sigue buscando productos en el catálogo</Text>
+                        <Text style={styles.catalogTitle}>Agregar productos</Text>
+                        <Text style={styles.catalogSubtitle}>Sigue buscando productos en el catalogo</Text>
                     </View>
                     <Ionicons name="add-circle" size={28} color="#16a34a" />
                 </TouchableOpacity>
 
-                {/* Categoría Global */}
-                <View style={styles.sectionHeader}>
-                    <Text style={styles.sectionTitle}>Asignar Categoría</Text>
-                    <Text style={styles.sectionSubtitle}>Selecciona una categoría para aplicar a estos productos</Text>
-                </View>
-
-                {loadingCategorias ? (
-                    <ActivityIndicator size="small" color="#16a34a" style={{ marginBottom: 20 }} />
-                ) : (
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoriesScroll}>
-                        {categorias.map((cat) => (
-                            <TouchableOpacity
-                                key={cat.idcategorias}
-                                onPress={() => setCategoriaId(cat.idcategorias)}
-                                style={[
-                                    styles.catChip,
-                                    categoriaId === cat.idcategorias && styles.catChipSelected,
-                                    { borderColor: cat.color || '#e2e8f0' }
-                                ]}
-                            >
-                                <Text style={[
-                                    styles.catText,
-                                    categoriaId === cat.idcategorias && styles.catTextSelected
-                                ]}>
-                                    {cat.nombre}
-                                </Text>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
-                )}
-
-                {/* Lista de productos */}
                 <View style={[styles.sectionHeader, { marginTop: 10 }]}>
                     <Text style={styles.sectionTitle}>Productos en la lista ({itemsAgregados.length})</Text>
                 </View>
@@ -188,7 +140,7 @@ export default function CrearProductoScreen() {
                 {itemsAgregados.length === 0 ? (
                     <View style={styles.emptyContainer}>
                         <Ionicons name="basket-outline" size={60} color="#cbd5e1" />
-                        <Text style={styles.emptyText}>No has añadido productos todavía</Text>
+                        <Text style={styles.emptyText}>No has añadido productos todavia</Text>
                     </View>
                 ) : (
                     itemsAgregados.map((item) => (
@@ -201,7 +153,11 @@ export default function CrearProductoScreen() {
                                 />
                                 <View style={{ flex: 1, marginLeft: 12 }}>
                                     <Text style={styles.itemName} numberOfLines={1}>{item.nombre}</Text>
-                                    <Text style={styles.itemBrand}>{item.marca}</Text>
+                                    <View style={styles.itemBrandRow}>
+                                        <Text style={styles.itemBrand}>{item.marca}</Text>
+                                        <View style={styles.dot} />
+                                        <Text style={styles.itemCatalogCat}>{item.categoria}</Text>
+                                    </View>
                                 </View>
                                 <TouchableOpacity onPress={() => removeAddedItem(item.id)} style={styles.removeBtn}>
                                     <Ionicons name="trash-outline" size={18} color="#ef4444" />
@@ -209,7 +165,7 @@ export default function CrearProductoScreen() {
                             </View>
 
                             <View style={styles.itemFooter}>
-                                <Text style={styles.quantityLabel}>Cantidad de articulos:</Text>
+                                <Text style={styles.quantityLabel}>Cantidad:</Text>
                                 <View style={styles.counter}>
                                     <TouchableOpacity
                                         onPress={() => updateItemQuantity(item.id, -1)}
@@ -247,6 +203,16 @@ export default function CrearProductoScreen() {
                     )}
                 </TouchableOpacity>
             </KeyboardAvoidingView>
+
+            <CustomAlert
+                visible={alertConfig.visible}
+                title={alertConfig.title}
+                message={alertConfig.message}
+                type={alertConfig.type}
+                icon={alertConfig.icon}
+                color={alertConfig.color}
+                onClose={handleAlertClose}
+            />
         </View>
     );
 }
@@ -336,30 +302,6 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#94a3b8',
         marginTop: 2,
-    },
-    categoriesScroll: {
-        marginBottom: 20,
-        paddingVertical: 5,
-    },
-    catChip: {
-        paddingHorizontal: 15,
-        paddingVertical: 8,
-        borderRadius: 12,
-        borderWidth: 1.5,
-        marginRight: 10,
-        backgroundColor: '#fff',
-    },
-    catChipSelected: {
-        backgroundColor: '#16a34a',
-        borderColor: '#16a34a',
-    },
-    catText: {
-        fontSize: 13,
-        fontWeight: '700',
-        color: '#64748b',
-    },
-    catTextSelected: {
-        color: '#fff',
     },
     itemCard: {
         backgroundColor: '#fff',
@@ -475,5 +417,22 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#94a3b8',
         fontWeight: '500',
+    },
+    itemBrandRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 2,
+    },
+    itemCatalogCat: {
+        fontSize: 11,
+        color: '#64748b',
+        fontWeight: '600',
+    },
+    dot: {
+        width: 3,
+        height: 3,
+        borderRadius: 2,
+        backgroundColor: '#cbd5e1',
+        marginHorizontal: 6,
     },
 });

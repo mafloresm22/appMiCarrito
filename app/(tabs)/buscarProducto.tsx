@@ -1,11 +1,12 @@
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import {
     ActivityIndicator,
     FlatList,
     Image,
     Keyboard,
+    ScrollView,
     StyleSheet,
     Text,
     TextInput,
@@ -18,27 +19,50 @@ import { productosPeru } from '../../services/ProductosPeru';
 export default function BuscarProductoScreen() {
     const router = useRouter();
     const insets = useSafeAreaInsets();
+    const params = useLocalSearchParams();
     const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(false);
-    const [productos, setProductos] = useState<any[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState('Todos');
+    const [productos, setProductos] = useState<any[]>(productosPeru.slice(0, 10));
     const [selectedProducts, setSelectedProducts] = useState<any[]>([]);
 
-    const handleSearch = async () => {
-        if (!query.trim()) return;
+    const categories = ['Todos', ...new Set(productosPeru.map(p => p.categoria))];
 
-        Keyboard.dismiss();
-        setLoading(true);
+    useEffect(() => {
+        // Sincronizar productos seleccionados si vienen de crearProducto
+        if (params.currentItems) {
+            try {
+                const current = JSON.parse(params.currentItems as string);
+                setSelectedProducts(current);
+            } catch (e) {
+                console.error('Error sincronizando items:', e);
+            }
+        }
+    }, [params.currentItems]);
 
-        setTimeout(() => {
-            const queryLower = query.toLowerCase();
-            const results = productosPeru.filter(p =>
-                p.nombre.toLowerCase().includes(queryLower) ||
-                p.marca.toLowerCase().includes(queryLower)
+    // Lógica de filtrado combinada
+    useEffect(() => {
+        const qL = query.toLowerCase().trim();
+        let filtered = productosPeru;
+
+        if (selectedCategory !== 'Todos') {
+            filtered = filtered.filter(p => p.categoria === selectedCategory);
+        }
+
+        if (qL.length > 0) {
+            filtered = filtered.filter(p =>
+                p.nombre.toLowerCase().includes(qL) ||
+                p.marca.toLowerCase().includes(qL)
             );
-            setProductos(results);
-            setLoading(false);
-        }, 300);
-    };
+        }
+
+        // Si no hay búsqueda ni categoría, limitamos a los 10 primeros por rendimiento visual inicial
+        if (qL === '' && selectedCategory === 'Todos') {
+            setProductos(productosPeru.slice(0, 10));
+        } else {
+            setProductos(filtered);
+        }
+    }, [query, selectedCategory]);
 
     const toggleProduct = (product: any) => {
         const isSelected = selectedProducts.some(p => p.id === product.id);
@@ -130,29 +154,42 @@ export default function BuscarProductoScreen() {
                             placeholder="Buscar producto (ej: Gloria, Arroz...)"
                             placeholderTextColor="#94a3b8"
                             value={query}
-                            onChangeText={(text: string) => {
-                                setQuery(text);
-                                if (text.length > 2) {
-                                    const qL = text.toLowerCase();
-                                    const r = productosPeru.filter(p =>
-                                        p.nombre.toLowerCase().includes(qL) ||
-                                        p.marca.toLowerCase().includes(qL)
-                                    );
-                                    setProductos(r);
-                                } else if (text.length === 0) {
-                                    setProductos([]);
-                                }
-                            }}
-                            onSubmitEditing={handleSearch}
+                            onChangeText={setQuery}
+                            onSubmitEditing={() => Keyboard.dismiss()}
                             returnKeyType="search"
                         />
                         {query.length > 0 && (
-                            <TouchableOpacity onPress={() => { setQuery(''); setProductos([]); }}>
+                            <TouchableOpacity onPress={() => setQuery('')}>
                                 <Ionicons name="close-circle" size={20} color="#94a3b8" />
                             </TouchableOpacity>
                         )}
                     </View>
                 </View>
+
+                {/* Filtro de Categorías */}
+                <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.categoriesContainer}
+                >
+                    {categories.map((cat) => (
+                        <TouchableOpacity
+                            key={cat}
+                            onPress={() => setSelectedCategory(cat)}
+                            style={[
+                                styles.catChip,
+                                selectedCategory === cat && styles.catChipActive
+                            ]}
+                        >
+                            <Text style={[
+                                styles.catChipText,
+                                selectedCategory === cat && styles.catChipTextActive
+                            ]}>
+                                {cat}
+                            </Text>
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
             </View>
 
             <View style={{ flex: 1 }}>
@@ -464,5 +501,31 @@ const styles = StyleSheet.create({
         color: '#94a3b8',
         textAlign: 'center',
         lineHeight: 20,
+    },
+    categoriesContainer: {
+        paddingHorizontal: 20,
+        paddingTop: 15,
+        paddingBottom: 5,
+        gap: 10,
+    },
+    catChip: {
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        borderRadius: 12,
+        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.3)',
+    },
+    catChipActive: {
+        backgroundColor: '#fff',
+        borderColor: '#fff',
+    },
+    catChipText: {
+        color: '#fff',
+        fontSize: 13,
+        fontWeight: '700',
+    },
+    catChipTextActive: {
+        color: '#16a34a',
     },
 });

@@ -48,16 +48,30 @@ export const APP_MESSAGES = {
     DATABASE: {
         SAVE_SUCCESS: {
             type: ALERT_TYPES.SUCCESS,
-            title: 'Guardado',
-            message: 'Los cambios se guardaron correctamente.',
-            icon: 'save-outline',
-            color: '#3b82f6',
+            title: '¡Lista Guardada!',
+            message: 'Tus productos se han guardado correctamente en la base de datos.',
+            icon: 'checkmark-done-circle-outline',
+            color: '#16a34a',
+        },
+        SAVE_WITH_WARNINGS: {
+            type: ALERT_TYPES.WARNING,
+            title: 'Guardado con Avisos',
+            message: 'Se guardó la lista, pero algunos productos no tienen una categoría asignada.',
+            icon: 'alert-circle-outline',
+            color: '#f59e0b',
+        },
+        EMPTY_LIST: {
+            type: ALERT_TYPES.WARNING,
+            title: 'Lista Vacía',
+            message: 'No puedes guardar una lista sin productos. ¡Añade algunos primero!',
+            icon: 'basket-outline',
+            color: '#64748b',
         },
         GENERIC_ERROR: {
             type: ALERT_TYPES.ERROR,
-            title: 'Ups, algo salió mal',
-            message: 'Hubo un error inesperado. Por favor reintenta más tarde.',
-            icon: 'bug-outline',
+            title: 'Error al Guardar',
+            message: 'No pudimos guardar tu lista. Por favor, verifica tu conexión.',
+            icon: 'close-circle-outline',
             color: '#ef4444',
         },
     }
