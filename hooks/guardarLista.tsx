@@ -1,7 +1,7 @@
 import { supabase } from '../services/supabase';
 
 export const useGuardarLista = () => {
-    
+
     const guardarProductos = async (itemsAgregados: any[]) => {
         if (itemsAgregados.length === 0) {
             return { success: false, error: 'EMPTY' };
@@ -21,7 +21,7 @@ export const useGuardarLista = () => {
             if (catError) throw catError;
 
             // 3. Preparar el mapeo (Nombre -> UUID) con normalización (quitar acentos)
-            const normalize = (str: string) => 
+            const normalize = (str: string) =>
                 (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 
             const catMap = new Map();
@@ -33,23 +33,20 @@ export const useGuardarLista = () => {
             const productInserts = itemsAgregados.map(item => {
                 const originalCat = item.categoria || "";
                 const normalizedSearch = normalize(originalCat);
-                
-                // Intento 1: Coincidencia exacta
+
                 let categoriaId = catMap.get(normalizedSearch);
 
-                // Intento 2: Coincidencia parcial
                 if (!categoriaId) {
                     for (let [dbName, id] of catMap) {
                         if (normalizedSearch.length > 3 && (dbName.includes(normalizedSearch) || normalizedSearch.includes(dbName))) {
                             categoriaId = id;
-                            break; 
+                            break;
                         }
                     }
                 }
 
-                // Intento 3: Fallback a "Otros"
                 if (!categoriaId) {
-                    categoriaId = catMap.get("otros"); 
+                    categoriaId = catMap.get("otros");
                 }
 
                 return {
@@ -62,7 +59,7 @@ export const useGuardarLista = () => {
                 };
             });
 
-            // 5. Insertar en Supabase
+            // Insertar en Supabase
             const { error: insertError } = await supabase.from('productos').insert(productInserts);
             if (insertError) throw insertError;
 
