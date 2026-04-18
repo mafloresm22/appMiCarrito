@@ -52,7 +52,14 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="crear"
+                name="buscarProducto"
+                options={{
+                    href: null,
+                    tabBarStyle: { display: 'none' },
+                }}
+            />
+            <Tabs.Screen
+                name="crearProducto"
                 options={{
                     href: null,
                 }}

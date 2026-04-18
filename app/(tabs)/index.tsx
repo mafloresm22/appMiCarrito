@@ -178,7 +178,7 @@ export default function HomeScreen() {
             <View style={styles.fabContainer}>
                 <TouchableOpacity
                     style={styles.fab}
-                    onPress={() => router.push('/crear' as any)}
+                    onPress={() => router.push('/crearProducto' as any)}
                 >
                     <Ionicons name="add" size={35} color="#fff" />
                 </TouchableOpacity>
