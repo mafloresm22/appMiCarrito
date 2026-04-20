@@ -176,5 +176,76 @@ export const productosPeru = [
     { id: '134', nombre: 'Tortees Picantes', marca: 'Karinto', categoria: 'Sancks y Golosinas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Tortees%20Picantes.jpg' },
     { id: '135', nombre: 'Cheese Tris Mediano', marca: 'Frito Lay', categoria: 'Sancks y Golosinas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Cheese%20Tris%20Mediano.jpg' },
     { id: '136', nombre: 'Cuates Picantes', marca: 'Karinto', categoria: 'Sancks y Golosinas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Cuates%20Picantes.jpg' },
-    { id: '137', nombre: 'Mani con Sal', marca: 'Karinto', categoria: 'Sancks y Golosinas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Mani%20con%20Sal.jpg' }
+    { id: '137', nombre: 'Mani con Sal', marca: 'Karinto', categoria: 'Sancks y Golosinas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Mani%20con%20Sal.jpg' },
+
+    // --- ABARROTES Y DESPENSA ---
+    { id: '188', nombre: 'Garbanzo 500g', marca: 'Costeño', categoria: 'Abarrotes y Despensa', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Garbanzo.webp' },
+    { id: '189', nombre: 'Trigo Resbalado 500g', marca: 'Mercado', categoria: 'Abarrotes y Despensa', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Trigo%20Resbalado%20500g.png' },
+    { id: '190', nombre: 'Harina de Trigo Preparada', marca: 'Blanca Flor', categoria: 'Abarrotes y Despensa', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Harina%20de%20Trigo%20Preparada.jpg' },
+    { id: '191', nombre: 'Harina Sin Preparar', marca: 'Favorita', categoria: 'Abarrotes y Despensa', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/cu3uophhl1qt7qe92cah.png' },
+    { id: '192', nombre: 'Maicena 100g', marca: 'Duryea', categoria: 'Abarrotes y Despensa', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Maicena%20100g.webp' },
+    { id: '193', nombre: 'Cacao en Polvo', marca: 'Royal', categoria: 'Abarrotes y Despensa', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Cacao%20en%20polvo.jpg' },
+    { id: '194', nombre: 'Salsa de Soya', marca: 'Kikko', categoria: 'Abarrotes y Despensa', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Salsa%20de%20Soya.webp' },
+    { id: '195', nombre: 'Vinagre Tinto 500ml', marca: 'Sullana', categoria: 'Abarrotes y Despensa', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Vinagre%20Tinto%20500ml.jpg' },
+
+    // --- FRUTAS Y VERDURAS ---
+    { id: '196', nombre: 'Brocoli x Unidad', marca: 'Mercado', categoria: 'Frutas y Verduras', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Brocoli%20x%20Unidad.jpg' },
+    { id: '197', nombre: 'Lechuga Organica', marca: 'Mercado', categoria: 'Frutas y Verduras', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Lechuga%20Organica.jpg' },
+    { id: '198', nombre: 'Espinaca x Atado', marca: 'Mercado', categoria: 'Frutas y Verduras', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Espinaca%20x%20Atado.jpg' },
+    { id: '199', nombre: 'Pimiento Rojo x Unidad', marca: 'Mercado', categoria: 'Frutas y Verduras', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Pimiento%20Rojo%20x%20Unidad.jpg' },
+    { id: '200', nombre: 'Beterraga 1kg', marca: 'Mercado', categoria: 'Frutas y Verduras', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Beterraga%201kg.jpg' },
+    { id: '201', nombre: 'Pepinillo x Unidad', marca: 'Mercado', categoria: 'Frutas y Verduras', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Pepinillo%20x%20Unidad.jpg' },
+    { id: '202', nombre: 'Apio x Atado', marca: 'Mercado', categoria: 'Frutas y Verduras', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Apio%20x%20Atado.jpg' },
+    { id: '203', nombre: 'Poro x Unidad', marca: 'Mercado', categoria: 'Frutas y Verduras', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Poro%20x%20Unidad.jpg' },
+    { id: '204', nombre: 'Papaya Selva 1kg', marca: 'Mercado', categoria: 'Frutas y Verduras', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Papaya%20Selva%201kg.jpg' },
+    { id: '205', nombre: 'Piña Golden 1kg', marca: 'Mercado', categoria: 'Frutas y Verduras', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Pina%20Golden%201kg.jpg' },
+
+    // --- LACTEOS Y HUEVOS ---
+    { id: '206', nombre: 'Mantequilla con Sal', marca: 'Laive', categoria: 'Lacteos y Huevos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Mantequilla%20con%20Sal.jpg' },
+    { id: '207', nombre: 'Queso Edam Tajado', marca: 'Laive', categoria: 'Lacteos y Huevos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Queso%20Edam%20Tajado.jpg' },
+    { id: '208', nombre: 'Queso Crema 200g', marca: 'Philadelphia', categoria: 'Lacteos y Huevos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Queso%20Crema%20200g.jpg' },
+    { id: '209', nombre: 'Crema de Leche', marca: 'Gloria', categoria: 'Lacteos y Huevos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Crema%20de%20Leche.jpg' },
+    { id: '210', nombre: 'Mezcla Lactea Pack x 6', marca: 'Pura Vida', categoria: 'Lacteos y Huevos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Mezcla%20Lactea%20Pack%20x%206.jpg' },
+
+    // --- LIMPIEZA DEL HOGAR ---
+    { id: '211', nombre: 'Limpia Todo Lavanda', marca: 'Poett', categoria: 'Limpieza del Hogar', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Limpia%20Todo%20Lavanda.jpg' },
+    { id: '212', nombre: 'Sacagrasa Atomizador', marca: 'Sapolio', categoria: 'Limpieza del Hogar', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Sacagrasa%20Atomizador.jpg' },
+    { id: '213', nombre: 'Limpia Vidrios Repuesto', marca: 'Windex', categoria: 'Limpieza del Hogar', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Limpia%20Vidrios%20Repuesto.jpg' },
+    { id: '214', nombre: 'Lustramuebles Aerosol', marca: 'Pledge', categoria: 'Limpieza del Hogar', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Lustramuebles%20Aerosol.jpg' },
+    { id: '215', nombre: 'Insecticida Casa y Jardin', marca: 'Baygon', categoria: 'Limpieza del Hogar', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Insecticida%20Casa%20y%20Jardin.jpg' },
+    { id: '216', nombre: 'Ambientador Spray', marca: 'Glade', categoria: 'Limpieza del Hogar', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Ambientador%20Spray.jpg' },
+
+    // --- BEBIDAS Y LICORES ---
+    { id: '217', nombre: 'Gaseosa Guarana 3L', marca: 'Backus', categoria: 'Bebidas y Licores', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Gaseosa%20Guarana%203L.jpg' },
+    { id: '218', nombre: 'Cerveza Pilsen 6 Pack', marca: 'Backus', categoria: 'Bebidas y Licores', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Cerveza%20Pilsen%206%20Pack.jpg' },
+    { id: '219', nombre: 'Agua con Gas 2.5L', marca: 'Cielo', categoria: 'Bebidas y Licores', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Agua%20con%20Gas%202.5L.jpg' },
+    { id: '220', nombre: 'Jugo de Naranja 1L', marca: 'Frugos', categoria: 'Bebidas y Licores', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Jugo%20de%20Naranja%201L.jpg' },
+    { id: '221', nombre: 'Tinto de Verano', marca: 'Sandevid', categoria: 'Bebidas y Licores', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Tinto%20de%20Verano.jpg' },
+
+    // --- SNACKS Y GOLOSINAS ---
+    { id: '222', nombre: 'Picaras Clasicas Pack', marca: 'Winters', categoria: 'Snacks y Golosinas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Picaras%20Clasicas%20Pack.jpg' },
+    { id: '223', nombre: 'Wafer de Vainilla', marca: 'Costa', categoria: 'Snacks y Golosinas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Wafer%20de%20Vainilla.webp' },
+    { id: '224', nombre: 'Galletas de Agua', marca: 'San Jorge', categoria: 'Snacks y Golosinas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Galletas%20de%20Agua.webp' },
+    { id: '225', nombre: 'Chupetin Glow', marca: 'Big Babol', categoria: 'Snacks y Golosinas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Chupetin%20Glow.jpg' },
+    { id: '226', nombre: 'Gomitas de Eucalipto', marca: 'Ambrosoli', categoria: 'Snacks y Golosinas', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Gomitas%20de%20Eucalipto.webp' },
+
+    // --- CUIDADO PERSONAL ---
+    { id: '227', nombre: 'Talco para Pies 100g', marca: 'Rexona', categoria: 'Cuidado Personal', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Talco%20para%20Pies%20100g.jpg' },
+    { id: '228', nombre: 'Crema Corporal Hidratante', marca: 'Nivea', categoria: 'Cuidado Personal', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Crema%20Corporal%20Hidratante.jpg' },
+    { id: '229', nombre: 'Protector Solar FPS 50', marca: 'Bahia', categoria: 'Cuidado Personal', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Protector%20Solar%20FPS%2050.jpg' },
+    { id: '230', nombre: 'Preservativos x 3', marca: 'Piel', categoria: 'Cuidado Personal', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Preservativos%20x%203.jpg' },
+    { id: '231', nombre: 'Toallitas Humedas Bebe', marca: 'Huggies', categoria: 'Cuidado Personal', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Toallitas%20Humedas%20Bebe.jpg' },
+
+    // --- PESCADOS Y MARISCOS ---
+    { id: '232', nombre: 'Caballa Fresca 1kg', marca: 'Terminal', categoria: 'Pescados y Mariscos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Caballa%20Fresca%201kg.jpg' },
+    { id: '233', nombre: 'Bonito Fresco 1kg', marca: 'Terminal', categoria: 'Pescados y Mariscos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Bonito%20Fresco%201kg.jpg' },
+    { id: '234', nombre: 'Conchas de Abanico x 12', marca: 'Terminal', categoria: 'Pescados y Mariscos', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Conchas%20de%20Abanico%20x%2012.jpg' },
+
+    // --- CONGELADOS ---
+    { id: '235', nombre: 'Pizza Americana Congelada', marca: 'Tottus', categoria: 'Congelados', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Pizza%20Americana%20Congelada.jpg' },
+    { id: '236', nombre: 'Verduras Mix Congeladas', marca: 'Huerto Alchemist', categoria: 'Congelados', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Verduras%20Mix%20Congeladas.jpg' },
+
+    // --- CARNES ---
+    { id: '237', nombre: 'Hot Dog de Pollo x 12', marca: 'La Segoviana', categoria: 'Carnes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Hot%20Dog%20de%20Pollo%20x%2012.jpg' }
+
 ];
