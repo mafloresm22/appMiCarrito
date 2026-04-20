@@ -1,4 +1,5 @@
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useIsFocused } from '@react-navigation/native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
@@ -7,17 +8,19 @@ import {
     Image,
     Keyboard,
     ScrollView,
-    StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
     View
 } from 'react-native';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { styles } from '../../assets/styles/buscarProducto.styles';
 import { productosPeru } from '../../services/ProductosPeru';
 
 export default function BuscarProductoScreen() {
     const router = useRouter();
+    const isFocused = useIsFocused();
     const insets = useSafeAreaInsets();
     const params = useLocalSearchParams();
     const [query, setQuery] = useState('');
@@ -29,7 +32,12 @@ export default function BuscarProductoScreen() {
     const categories = ['Todos', ...new Set(productosPeru.map(p => p.categoria))];
 
     useEffect(() => {
-        // Sincronizar productos seleccionados si vienen de crearProducto
+        if (isFocused) {
+            setQuery('');
+        }
+    }, [isFocused]);
+
+    useEffect(() => {
         if (params.currentItems) {
             try {
                 const current = JSON.parse(params.currentItems as string);
@@ -56,7 +64,7 @@ export default function BuscarProductoScreen() {
             );
         }
 
-        // Si no hay búsqueda ni categoría, limitamos a los 10 primeros por rendimiento visual inicial
+        // Mostrar los 10 primeros productos
         if (qL === '' && selectedCategory === 'Todos') {
             setProductos(productosPeru.slice(0, 10));
         } else {
@@ -129,8 +137,12 @@ export default function BuscarProductoScreen() {
     };
 
     return (
-        <View style={styles.container}>
-            <View style={[styles.topSection, { paddingTop: insets.top }]}>
+        <Animated.View
+            key={`buscar-${isFocused}`}
+            entering={FadeInDown.duration(600).delay(100)}
+            style={styles.container}
+        >
+            <Animated.View entering={FadeInDown.delay(200).duration(600)} style={[styles.topSection, { paddingTop: insets.top }]}>
                 <View style={styles.header}>
                     <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
                         <Ionicons name="chevron-back" size={26} color="#fff" />
@@ -190,9 +202,9 @@ export default function BuscarProductoScreen() {
                         </TouchableOpacity>
                     ))}
                 </ScrollView>
-            </View>
+            </Animated.View>
 
-            <View style={{ flex: 1 }}>
+            <Animated.View entering={FadeInUp.delay(400).duration(600)} style={{ flex: 1 }}>
                 {loading ? (
                     <View style={styles.centerContainer}>
                         <ActivityIndicator size="large" color="#16a34a" />
@@ -216,10 +228,10 @@ export default function BuscarProductoScreen() {
                         <Text style={styles.emptySubtitle}>Busca productos para agregarlos a tu lista de compras.</Text>
                     </View>
                 )}
-            </View>
+            </Animated.View>
 
             {selectedProducts.length > 0 && (
-                <View style={styles.footer}>
+                <Animated.View entering={FadeInUp.delay(300)} style={styles.footer}>
                     <TouchableOpacity
                         style={styles.saveBtn}
                         onPress={() => {
@@ -227,6 +239,7 @@ export default function BuscarProductoScreen() {
                                 pathname: '/crearProducto',
                                 params: { items: JSON.stringify(selectedProducts) }
                             });
+                            setTimeout(() => setSelectedProducts([]), 500);
                         }}
                     >
                         <View style={styles.saveBtnContent}>
@@ -236,296 +249,8 @@ export default function BuscarProductoScreen() {
                             </View>
                         </View>
                     </TouchableOpacity>
-                </View>
+                </Animated.View>
             )}
-        </View>
+        </Animated.View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f8fafc',
-    },
-    topSection: {
-        backgroundColor: '#16a34a',
-        borderBottomLeftRadius: 32,
-        borderBottomRightRadius: 32,
-        paddingBottom: 20,
-        shadowColor: '#16a34a',
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.2,
-        shadowRadius: 15,
-        elevation: 10,
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 20,
-        paddingVertical: 15,
-    },
-    backBtn: {
-        padding: 8,
-        borderRadius: 12,
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    },
-    headerTitle: {
-        fontSize: 20,
-        fontWeight: '900',
-        color: '#fff',
-        letterSpacing: 0.5,
-    },
-    badgeContainer: {
-        position: 'relative',
-        padding: 5,
-    },
-    countBadge: {
-        position: 'absolute',
-        top: -2,
-        right: -2,
-        backgroundColor: '#ef4444',
-        borderRadius: 10,
-        minWidth: 18,
-        height: 18,
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 1,
-        borderWidth: 2,
-        borderColor: '#16a34a',
-    },
-    countText: {
-        color: '#fff',
-        fontSize: 10,
-        fontWeight: '900',
-    },
-    searchContainer: {
-        paddingHorizontal: 20,
-        paddingTop: 5,
-    },
-    inputWrapper: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        borderRadius: 18,
-        paddingHorizontal: 15,
-        height: 56,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1,
-        shadowRadius: 10,
-        elevation: 5,
-    },
-    input: {
-        flex: 1,
-        marginLeft: 10,
-        fontSize: 15,
-        color: '#1e293b',
-        fontWeight: '500',
-    },
-    listPadding: {
-        paddingHorizontal: 20,
-        paddingTop: 20,
-        paddingBottom: 100,
-    },
-    card: {
-        flexDirection: 'row',
-        backgroundColor: '#fff',
-        borderRadius: 20,
-        marginBottom: 16,
-        padding: 12,
-        shadowColor: '#64748b',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.08,
-        shadowRadius: 12,
-        elevation: 3,
-        borderWidth: 1,
-        borderColor: 'transparent',
-    },
-    cardSelected: {
-        borderColor: '#16a34a',
-        backgroundColor: '#f0fdf4',
-    },
-    imagePlaceholder: {
-        width: 90,
-        height: 90,
-        borderRadius: 16,
-        backgroundColor: '#f8fafc',
-        justifyContent: 'center',
-        alignItems: 'center',
-        overflow: 'hidden',
-        position: 'relative',
-    },
-    productImage: {
-        width: '85%',
-        height: '85%',
-    },
-    selectionBadge: {
-        position: 'absolute',
-        top: 4,
-        right: 4,
-        backgroundColor: '#fff',
-        borderRadius: 10,
-    },
-    cardInfo: {
-        flex: 1,
-        marginLeft: 15,
-        justifyContent: 'space-between',
-    },
-    categoryBadge: {
-        backgroundColor: '#f1f5f9',
-        paddingHorizontal: 8,
-        paddingVertical: 2,
-        borderRadius: 6,
-        alignSelf: 'flex-start',
-        marginBottom: 6,
-    },
-    categoryText: {
-        fontSize: 10,
-        fontWeight: '700',
-        color: '#94a3b8',
-        textTransform: 'uppercase',
-    },
-    productName: {
-        fontSize: 15,
-        fontWeight: '700',
-        color: '#1e293b',
-        lineHeight: 20,
-    },
-    productBrand: {
-        fontSize: 12,
-        color: '#64748b',
-        marginTop: 2,
-    },
-    addBtn: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#f0fdf4',
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 10,
-        alignSelf: 'flex-start',
-        marginTop: 8,
-    },
-    addBtnText: {
-        marginLeft: 6,
-        color: '#16a34a',
-        fontWeight: '700',
-        fontSize: 13,
-    },
-    removeBtn: {
-        backgroundColor: '#fef2f2',
-    },
-    removeBtnText: {
-        color: '#ef4444',
-    },
-    footer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        paddingHorizontal: 20,
-        paddingTop: 15,
-        paddingBottom: 25,
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-        borderTopWidth: 1,
-        borderTopColor: '#f1f5f9',
-    },
-    saveBtn: {
-        backgroundColor: '#16a34a',
-        height: 60,
-        borderRadius: 18,
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: '#16a34a',
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.25,
-        shadowRadius: 15,
-        elevation: 8,
-    },
-    saveBtnContent: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 12,
-    },
-    saveBtnText: {
-        color: '#fff',
-        fontSize: 17,
-        fontWeight: '800',
-        letterSpacing: 0.5,
-    },
-    saveBtnBadge: {
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-        paddingHorizontal: 10,
-        paddingVertical: 4,
-        borderRadius: 10,
-    },
-    saveBadgeText: {
-        color: '#fff',
-        fontSize: 14,
-        fontWeight: '800',
-    },
-    centerContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: 40,
-    },
-    loadingText: {
-        marginTop: 15,
-        fontSize: 15,
-        color: '#64748b',
-        fontWeight: '600',
-    },
-    emptyIconContainer: {
-        width: 120,
-        height: 120,
-        borderRadius: 60,
-        backgroundColor: '#fff',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 20,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.05,
-        shadowRadius: 20,
-    },
-    emptyTitle: {
-        fontSize: 19,
-        fontWeight: '800',
-        color: '#0f172a',
-        marginBottom: 8,
-    },
-    emptySubtitle: {
-        fontSize: 14,
-        color: '#94a3b8',
-        textAlign: 'center',
-        lineHeight: 20,
-    },
-    categoriesContainer: {
-        paddingHorizontal: 20,
-        paddingTop: 15,
-        paddingBottom: 5,
-        gap: 10,
-    },
-    catChip: {
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        borderRadius: 12,
-        backgroundColor: 'rgba(255, 255, 255, 0.15)',
-        borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.3)',
-    },
-    catChipActive: {
-        backgroundColor: '#fff',
-        borderColor: '#fff',
-    },
-    catChipText: {
-        color: '#fff',
-        fontSize: 13,
-        fontWeight: '700',
-    },
-    catChipTextActive: {
-        color: '#16a34a',
-    },
-});

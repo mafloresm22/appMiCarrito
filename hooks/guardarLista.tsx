@@ -55,7 +55,7 @@ export const useGuardarLista = () => {
                     user_id: user_id,
                     cantidad: item.quantity || 1,
                     categoria_id: categoriaId,
-                    comprado: 'Pendiente'
+                    comprado: 'pendiente'
                 };
             });
 

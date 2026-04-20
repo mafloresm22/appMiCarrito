@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useIsFocused } from '@react-navigation/native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
@@ -7,12 +8,13 @@ import {
     KeyboardAvoidingView,
     Platform,
     ScrollView,
-    StyleSheet,
     Text,
     TouchableOpacity,
     View
 } from 'react-native';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { styles } from '../../assets/styles/crearProducto.styles';
 import CustomAlert from '../../components/customAlert';
 import { APP_MESSAGES } from '../../constants/mensajes';
 import { useGuardarLista } from '../../hooks/guardarLista';
@@ -20,6 +22,7 @@ import { useObtenerCategorias } from '../../hooks/obtenerCategoria';
 
 export default function CrearProductoScreen() {
     const router = useRouter();
+    const isFocused = useIsFocused();
     const insets = useSafeAreaInsets();
     const params = useLocalSearchParams();
 
@@ -91,6 +94,7 @@ export default function CrearProductoScreen() {
     const handleAlertClose = () => {
         setAlertConfig({ ...alertConfig, visible: false });
         if (alertConfig.type === 'success') {
+            setItemsAgregados([]); // Limpiar lista al guardar con éxito
             router.replace('/(tabs)');
         }
     };
@@ -100,109 +104,128 @@ export default function CrearProductoScreen() {
     };
 
     return (
-        <View style={styles.container}>
-            <View style={[styles.topSection, { paddingTop: insets.top }]}>
+        <Animated.View
+            key={`crear-${isFocused}`}
+            entering={FadeInDown.duration(600).delay(100)}
+            style={styles.container}
+        >
+            <Animated.View entering={FadeInDown.delay(200).duration(600)} style={[styles.topSection, { paddingTop: insets.top }]}>
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setItemsAgregados([]);
+                            router.back();
+                        }}
+                        style={styles.backBtn}
+                    >
                         <Ionicons name="close" size={26} color="#fff" />
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>Resumen de Lista</Text>
                     <View style={{ width: 40 }} />
                 </View>
-            </View>
+            </Animated.View>
 
-            <ScrollView
+            <Animated.View
+                entering={FadeInUp.delay(400).duration(600)}
                 style={styles.content}
-                contentContainerStyle={styles.scrollContent}
-                showsVerticalScrollIndicator={false}
             >
-                <TouchableOpacity
-                    style={styles.catalogBtn}
-                    onPress={() => router.push({
-                        pathname: '/buscarProducto',
-                        params: { currentItems: JSON.stringify(itemsAgregados) }
-                    })}
+                <ScrollView
+                    style={{ flex: 1 }}
+                    contentContainerStyle={styles.scrollContent}
+                    showsVerticalScrollIndicator={false}
                 >
-                    <View style={styles.catalogIcon}>
-                        <Ionicons name="search" size={24} color="#16a34a" />
-                    </View>
-                    <View style={{ flex: 1 }}>
-                        <Text style={styles.catalogTitle}>Agregar productos</Text>
-                        <Text style={styles.catalogSubtitle}>Sigue buscando productos en el catalogo</Text>
-                    </View>
-                    <Ionicons name="add-circle" size={28} color="#16a34a" />
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.catalogBtn}
+                        onPress={() => router.push({
+                            pathname: '/buscarProducto',
+                            params: { currentItems: JSON.stringify(itemsAgregados) }
+                        })}
+                    >
+                        <View style={styles.catalogIcon}>
+                            <Ionicons name="search" size={24} color="#16a34a" />
+                        </View>
+                        <View style={{ flex: 1 }}>
+                            <Text style={styles.catalogTitle}>Agregar productos</Text>
+                            <Text style={styles.catalogSubtitle}>Sigue buscando productos en el catalogo</Text>
+                        </View>
+                        <Ionicons name="add-circle" size={28} color="#16a34a" />
+                    </TouchableOpacity>
 
-                <View style={[styles.sectionHeader, { marginTop: 10 }]}>
-                    <Text style={styles.sectionTitle}>Productos en la lista ({itemsAgregados.length})</Text>
-                </View>
-
-                {itemsAgregados.length === 0 ? (
-                    <View style={styles.emptyContainer}>
-                        <Ionicons name="basket-outline" size={60} color="#cbd5e1" />
-                        <Text style={styles.emptyText}>No has añadido productos todavia</Text>
+                    <View style={[styles.sectionHeader, { marginTop: 10 }]}>
+                        <Text style={styles.sectionTitle}>Productos en la lista ({itemsAgregados.length})</Text>
                     </View>
-                ) : (
-                    itemsAgregados.map((item) => (
-                        <View key={item.id} style={styles.itemCard}>
-                            <View style={styles.itemMainInfo}>
-                                <Image
-                                    source={item.imagen ? { uri: item.imagen } : undefined}
-                                    style={styles.itemThumb}
-                                    defaultSource={require('../../assets/images/icon.png')}
-                                />
-                                <View style={{ flex: 1, marginLeft: 12 }}>
-                                    <Text style={styles.itemName} numberOfLines={1}>{item.nombre}</Text>
-                                    <View style={styles.itemBrandRow}>
-                                        <Text style={styles.itemBrand}>{item.marca}</Text>
-                                        <View style={styles.dot} />
-                                        <Text style={styles.itemCatalogCat}>{item.categoria}</Text>
+
+                    {itemsAgregados.length === 0 ? (
+                        <View style={styles.emptyContainer}>
+                            <Ionicons name="basket-outline" size={60} color="#cbd5e1" />
+                            <Text style={styles.emptyText}>No has añadido productos todavia</Text>
+                        </View>
+                    ) : (
+                        itemsAgregados.map((item) => (
+                            <View key={item.id} style={styles.itemCard}>
+                                <View style={styles.itemMainInfo}>
+                                    <Image
+                                        source={item.imagen ? { uri: item.imagen } : undefined}
+                                        style={styles.itemThumb}
+                                        defaultSource={require('../../assets/images/icon.png')}
+                                    />
+                                    <View style={{ flex: 1, marginLeft: 12 }}>
+                                        <Text style={styles.itemName} numberOfLines={1}>{item.nombre}</Text>
+                                        <View style={styles.itemBrandRow}>
+                                            <Text style={styles.itemBrand}>{item.marca}</Text>
+                                            <View style={styles.dot} />
+                                            <Text style={styles.itemCatalogCat}>{item.categoria}</Text>
+                                        </View>
+                                    </View>
+                                    <TouchableOpacity onPress={() => removeAddedItem(item.id)} style={styles.removeBtn}>
+                                        <Ionicons name="trash-outline" size={18} color="#ef4444" />
+                                    </TouchableOpacity>
+                                </View>
+
+                                <View style={styles.itemFooter}>
+                                    <Text style={styles.quantityLabel}>Cantidad:</Text>
+                                    <View style={styles.counter}>
+                                        <TouchableOpacity
+                                            onPress={() => updateItemQuantity(item.id, -1)}
+                                            style={styles.counterBtn}
+                                        >
+                                            <Ionicons name="remove" size={18} color="#1e293b" />
+                                        </TouchableOpacity>
+                                        <Text style={styles.counterValue}>{item.quantity}</Text>
+                                        <TouchableOpacity
+                                            onPress={() => updateItemQuantity(item.id, 1)}
+                                            style={styles.counterBtn}
+                                        >
+                                            <Ionicons name="add" size={18} color="#1e293b" />
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
-                                <TouchableOpacity onPress={() => removeAddedItem(item.id)} style={styles.removeBtn}>
-                                    <Ionicons name="trash-outline" size={18} color="#ef4444" />
-                                </TouchableOpacity>
                             </View>
+                        ))
+                    )}
+                </ScrollView>
+            </Animated.View>
 
-                            <View style={styles.itemFooter}>
-                                <Text style={styles.quantityLabel}>Cantidad:</Text>
-                                <View style={styles.counter}>
-                                    <TouchableOpacity
-                                        onPress={() => updateItemQuantity(item.id, -1)}
-                                        style={styles.counterBtn}
-                                    >
-                                        <Ionicons name="remove" size={18} color="#1e293b" />
-                                    </TouchableOpacity>
-                                    <Text style={styles.counterValue}>{item.quantity}</Text>
-                                    <TouchableOpacity
-                                        onPress={() => updateItemQuantity(item.id, 1)}
-                                        style={styles.counterBtn}
-                                    >
-                                        <Ionicons name="add" size={18} color="#1e293b" />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
-                    ))
-                )}
-            </ScrollView>
-
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+            <Animated.View
+                entering={FadeInUp.delay(300)}
                 style={styles.footer}
             >
-                <TouchableOpacity
-                    style={[styles.saveBtn, (loading || itemsAgregados.length === 0) && styles.disabledBtn]}
-                    onPress={handleSave}
-                    disabled={loading || itemsAgregados.length === 0}
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                 >
-                    {loading ? (
-                        <ActivityIndicator color="#fff" />
-                    ) : (
-                        <Text style={styles.saveBtnText}>Guardar Lista de Compras</Text>
-                    )}
-                </TouchableOpacity>
-            </KeyboardAvoidingView>
+                    <TouchableOpacity
+                        style={[styles.saveBtn, (loading || itemsAgregados.length === 0) && styles.disabledBtn]}
+                        onPress={handleSave}
+                        disabled={loading || itemsAgregados.length === 0}
+                    >
+                        {loading ? (
+                            <ActivityIndicator color="#fff" />
+                        ) : (
+                            <Text style={styles.saveBtnText}>Guardar Lista de Compras</Text>
+                        )}
+                    </TouchableOpacity>
+                </KeyboardAvoidingView>
+            </Animated.View>
 
             <CustomAlert
                 visible={alertConfig.visible}
@@ -213,226 +236,6 @@ export default function CrearProductoScreen() {
                 color={alertConfig.color}
                 onClose={handleAlertClose}
             />
-        </View>
+        </Animated.View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f8fafc',
-    },
-    topSection: {
-        backgroundColor: '#16a34a',
-        borderBottomLeftRadius: 32,
-        borderBottomRightRadius: 32,
-        paddingBottom: 10,
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 20,
-        paddingVertical: 15,
-    },
-    backBtn: {
-        padding: 5,
-    },
-    headerTitle: {
-        fontSize: 18,
-        fontWeight: '900',
-        color: '#fff',
-    },
-    saveHeaderBtn: {
-        color: '#fff',
-        fontWeight: '700',
-        fontSize: 16,
-    },
-    content: {
-        flex: 1,
-    },
-    scrollContent: {
-        padding: 20,
-        paddingBottom: 120,
-    },
-    catalogBtn: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        padding: 15,
-        borderRadius: 20,
-        marginBottom: 25,
-        shadowColor: '#16a34a',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1,
-        shadowRadius: 10,
-        elevation: 3,
-    },
-    catalogIcon: {
-        width: 45,
-        height: 45,
-        borderRadius: 12,
-        backgroundColor: '#f0fdf4',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 15,
-    },
-    catalogTitle: {
-        fontSize: 16,
-        fontWeight: '700',
-        color: '#0f172a',
-    },
-    catalogSubtitle: {
-        fontSize: 12,
-        color: '#64748b',
-        marginTop: 2,
-    },
-    sectionHeader: {
-        marginBottom: 10,
-        paddingHorizontal: 5,
-    },
-    sectionTitle: {
-        fontSize: 14,
-        fontWeight: '800',
-        color: '#0f172a',
-        textTransform: 'uppercase',
-        letterSpacing: 0.5,
-    },
-    sectionSubtitle: {
-        fontSize: 12,
-        color: '#94a3b8',
-        marginTop: 2,
-    },
-    itemCard: {
-        backgroundColor: '#fff',
-        borderRadius: 20,
-        padding: 16,
-        marginBottom: 16,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.05,
-        shadowRadius: 8,
-        elevation: 2,
-    },
-    itemMainInfo: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    itemThumb: {
-        width: 50,
-        height: 50,
-        borderRadius: 10,
-        backgroundColor: '#f8fafc',
-    },
-    itemName: {
-        fontSize: 15,
-        fontWeight: '700',
-        color: '#1e293b',
-    },
-    itemBrand: {
-        fontSize: 12,
-        color: '#94a3b8',
-    },
-    removeBtn: {
-        padding: 5,
-    },
-    itemFooter: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: 15,
-        paddingTop: 15,
-        borderTopWidth: 1,
-        borderTopColor: '#f1f5f9',
-    },
-    quantityLabel: {
-        fontSize: 13,
-        fontWeight: '600',
-        color: '#64748b',
-    },
-    counter: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#f1f5f9',
-        borderRadius: 10,
-        padding: 4,
-    },
-    counterBtn: {
-        width: 30,
-        height: 30,
-        borderRadius: 8,
-        backgroundColor: '#fff',
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.05,
-        shadowRadius: 2,
-        elevation: 1,
-    },
-    counterValue: {
-        fontSize: 15,
-        fontWeight: '800',
-        color: '#1e293b',
-        marginHorizontal: 15,
-    },
-    footer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        padding: 20,
-        paddingBottom: Platform.OS === 'ios' ? 40 : 20,
-        backgroundColor: '#fff',
-        borderTopWidth: 1,
-        borderTopColor: '#f1f5f9',
-    },
-    saveBtn: {
-        backgroundColor: '#16a34a',
-        height: 55,
-        borderRadius: 16,
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: '#16a34a',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 8,
-        elevation: 4,
-    },
-    saveBtnText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '800',
-    },
-    disabledBtn: {
-        opacity: 0.5,
-        backgroundColor: '#94a3b8',
-    },
-    emptyContainer: {
-        alignItems: 'center',
-        paddingVertical: 40,
-    },
-    emptyText: {
-        marginTop: 10,
-        fontSize: 14,
-        color: '#94a3b8',
-        fontWeight: '500',
-    },
-    itemBrandRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 2,
-    },
-    itemCatalogCat: {
-        fontSize: 11,
-        color: '#64748b',
-        fontWeight: '600',
-    },
-    dot: {
-        width: 3,
-        height: 3,
-        borderRadius: 2,
-        backgroundColor: '#cbd5e1',
-        marginHorizontal: 6,
-    },
-});

@@ -1,0 +1,173 @@
+import { Dimensions, StyleSheet } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  headerBackground: {
+    height: height * 0.45,
+    backgroundColor: '#268f46ff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoContainer: {
+    alignItems: 'center',
+  },
+  cartIconContainer: {
+    marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cartGroceries: {
+    position: 'absolute',
+    top: 5,
+  },
+  title: {
+    fontSize: 42,
+    fontWeight: 'bold',
+    color: '#fff',
+    letterSpacing: 1,
+  },
+  subtitle: {
+    fontSize: 18,
+    color: '#fff',
+    opacity: 0.9,
+    marginTop: -5,
+  },
+  curve: {
+    height: 100,
+    backgroundColor: '#2f8d4eff',
+    borderBottomLeftRadius: width * 0.5,
+    borderBottomRightRadius: width * 0.5,
+    transform: [{ scaleX: 1.5 }],
+    marginTop: -50,
+  },
+  keyboardView: {
+    flex: 1,
+    marginTop: -80,
+    alignItems: 'center',
+  },
+  card: {
+    width: width * 0.85,
+    backgroundColor: '#fff',
+    borderRadius: 25,
+    padding: 25,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.1,
+    shadowRadius: 20,
+    elevation: 8,
+  },
+  inputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1.5,
+    borderColor: '#44af6dff',
+    borderRadius: 15,
+    marginBottom: 15,
+    backgroundColor: '#f9fdfc',
+  },
+  iconBox: {
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRightWidth: 1,
+    borderRightColor: '#1b6e48ff',
+  },
+  input: {
+    flex: 1,
+    height: 50,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    color: '#334155',
+  },
+  forgotPassword: {
+    alignSelf: 'flex-end',
+    marginBottom: 20,
+  },
+  forgotPasswordText: {
+    color: '#077033ff',
+    fontSize: 12,
+    textDecorationLine: 'underline',
+  },
+  loginButton: {
+    backgroundColor: '#208346ff',
+    borderRadius: 25,
+    height: 55,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#52c6ad',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
+    elevation: 5,
+    marginBottom: 25,
+  },
+  loginButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  dividerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#e2e8f0',
+  },
+  dividerText: {
+    marginHorizontal: 10,
+    color: '#94a3b8',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  socialContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 20,
+    marginBottom: 30,
+  },
+  socialButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#f1f5f9',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 5,
+    elevation: 2,
+  },
+  socialIcon: {
+    width: 24,
+    height: 24,
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  footerText: {
+    color: '#94a3b8',
+    fontSize: 14,
+  },
+  registerLink: {
+    color: '#0c7e0cff',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+});

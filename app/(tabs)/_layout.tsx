@@ -31,7 +31,7 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="listas"
+                name="listarProductos"
                 options={{
                     title: 'Listas',
                     tabBarIcon: ({ color }) => <Ionicons name="list" size={22} color={color} />,
