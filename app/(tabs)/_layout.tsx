@@ -2,10 +2,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React, { useState } from 'react';
 import { Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AjustesModal from './ajustes';
 
 export default function TabLayout() {
     const [isMenuVisible, setIsMenuVisible] = useState(false);
+    const insets = useSafeAreaInsets();
 
     return (
         <>
@@ -17,8 +19,8 @@ export default function TabLayout() {
                 backgroundColor: '#ffffff',
                 borderTopWidth: 1,
                 borderTopColor: '#f1f5f9',
-                height: Platform.OS === 'ios' ? 88 : 65,
-                paddingBottom: Platform.OS === 'ios' ? 30 : 10,
+                height: Platform.OS === 'ios' ? 88 : 65 + insets.bottom,
+                paddingBottom: Platform.OS === 'ios' ? 30 : insets.bottom + 10,
                 paddingTop: 10,
                 elevation: 0,
                 shadowOpacity: 0,
