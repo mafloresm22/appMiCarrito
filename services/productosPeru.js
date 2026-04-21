@@ -245,7 +245,7 @@ export const productosPeru = [
     { id: '235', nombre: 'Pizza Americana Congelada', marca: 'Tottus', categoria: 'Congelados', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Pizza%20Americana%20Congelada.jpg' },
     { id: '236', nombre: 'Verduras Mix Congeladas', marca: 'Huerto Alchemist', categoria: 'Congelados', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Verduras%20Mix%20Congeladas.jpg' },
 
-    // --- CARNES ---
+    // --- CARNES Y MAS---
     { id: '237', nombre: 'Hot Dog de Pollo x 12', marca: 'La Segoviana', categoria: 'Carnes', imagen: 'https://ocpjxzzwtltxwujevsro.supabase.co/storage/v1/object/public/Productos/Hot%20Dog%20de%20Pollo%20x%2012.jpg' }
 
 ];
