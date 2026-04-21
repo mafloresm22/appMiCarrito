@@ -1,9 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
+import React, { useState } from 'react';
 import { Platform } from 'react-native';
+import AjustesModal from './ajustes';
 
 export default function TabLayout() {
+    const [isMenuVisible, setIsMenuVisible] = useState(false);
+
     return (
+        <>
         <Tabs screenOptions={{
             tabBarActiveTintColor: '#22c55e',
             tabBarInactiveTintColor: '#94a3b8',
@@ -38,17 +43,16 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="recordatorios"
-                options={{
-                    title: 'Avisos',
-                    tabBarIcon: ({ color }) => <Ionicons name="notifications" size={22} color={color} />,
-                }}
-            />
-            <Tabs.Screen
                 name="ajustes"
                 options={{
                     title: 'Ajustes',
                     tabBarIcon: ({ color }) => <Ionicons name="settings" size={22} color={color} />,
+                }}
+                listeners={{
+                    tabPress: (e) => {
+                        e.preventDefault();
+                        setIsMenuVisible(true);
+                    },
                 }}
             />
             <Tabs.Screen
@@ -65,5 +69,11 @@ export default function TabLayout() {
                 }}
             />
         </Tabs>
+
+        <AjustesModal 
+            visible={isMenuVisible} 
+            onClose={() => setIsMenuVisible(false)} 
+        />
+        </>
     );
 }

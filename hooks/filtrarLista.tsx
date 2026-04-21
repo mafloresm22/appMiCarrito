@@ -44,15 +44,16 @@ export const useFiltrarLista = () => {
         if (filter === 'Todas') {
             setGroupedLists(allGroups);
         } else {
-            const filterLower = filter.toLowerCase().trim();
-            const filteredGroups = allGroups
-                .map(group => group.filter(item => {
-                    const status = (item.comprado || 'Pendiente').toLowerCase().trim();
-                    return status === filterLower;
-                }))
-                .filter(group => group.length > 0); 
-            
-            setGroupedLists(filteredGroups);
+        const filterLower = filter.toLowerCase().trim();
+        const filteredGroups = allGroups
+            .map(group => group.filter(item => {
+                const status = (item.comprado || 'Pendiente').toLowerCase().trim();
+                const categoriaName = (item.categorias?.nombre || '').toLowerCase().trim();
+                return status === filterLower || categoriaName === filterLower;
+            }))
+            .filter(group => group.length > 0);
+
+        setGroupedLists(filteredGroups);
         }
     }, [groupProductsByTime]);
 
@@ -64,7 +65,7 @@ export const useFiltrarLista = () => {
 
             const { data, error } = await supabase
                 .from('productos')
-                .select('*')
+                .select('*, categorias(nombre)')
                 .eq('user_id', userData.user.id)
                 .order('created_at', { ascending: false });
 

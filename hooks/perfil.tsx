@@ -2,7 +2,15 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../services/supabase';
 
 export function useProfile() {
-    const [profile, setProfile] = useState<{ username: string | null }>({ username: null });
+    const [profile, setProfile] = useState<{ 
+        username: string | null;
+        email: string | null;
+        createdAt: string | null;
+    }>({ 
+        username: null,
+        email: null,
+        createdAt: null
+    });
     const [loading, setLoading] = useState(true);
 
     const getProfile = async () => {
@@ -20,9 +28,17 @@ export function useProfile() {
 
                 if (error) {
                     console.log('Error al encontrar el nombre de usuario:', error);
-                    setProfile({ username: metadataUsername });
+                    setProfile({ 
+                        username: metadataUsername,
+                        email: user.email || null,
+                        createdAt: user.created_at || null
+                    });
                 } else {
-                    setProfile({ username: data?.username || metadataUsername });
+                    setProfile({ 
+                        username: data?.username || metadataUsername,
+                        email: user.email || null,
+                        createdAt: user.created_at || null
+                    });
                 }
             }
         } catch (error) {

@@ -7,7 +7,8 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    View
+    View,
+    Image
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import CustomAlert from '../../components/customAlert';
@@ -18,6 +19,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { styles } from '../../assets/styles/index.styles';
 import { useFiltrarLista } from '../../hooks/filtrarLista';
+import { useObtenerCategorias } from '../../hooks/obtenerCategoria';
 import { useProfile } from '../../hooks/perfil';
 
 export default function HomeScreen() {
@@ -29,14 +31,25 @@ export default function HomeScreen() {
     const {
         groupedLists,
         fetchProducts,
-        allProducts
+        allProducts,
+        activeFilter,
+        setActiveFilter,
+        applyFilter
     } = useFiltrarLista();
+
+    const { categorias } = useObtenerCategorias();
 
     useEffect(() => {
         if (isFocused) {
             fetchProducts();
         }
-    }, [isFocused]);
+    }, [isFocused, fetchProducts]);
+
+    useEffect(() => {
+        if (allProducts.length > 0) {
+            applyFilter(allProducts, activeFilter);
+        }
+    }, [activeFilter, allProducts, applyFilter]);
 
     const [alertConfig, setAlertConfig] = useState({
         visible: false,
@@ -101,55 +114,50 @@ export default function HomeScreen() {
                 {/* Contenido Principal */}
                 <View style={styles.contentBody}>
 
-                    {/* Estadisticas */}
+                    {/* Estadísticas */}
                     <View style={styles.statsRow}>
                         <View style={styles.statBox}>
                             <View style={[styles.statCircle, { backgroundColor: '#f0fdf4' }]}>
-                                <Ionicons name="list" size={20} color="#15803d" />
+                                <MaterialCommunityIcons name="format-list-bulleted" size={24} color="#16a34a" />
                             </View>
-                            <Text style={styles.statValue}>{groupedLists.length}</Text>
-                            <Text style={styles.statLabel}>Listas</Text>
+                            <View style={styles.statInfo}>
+                                <Text style={styles.statValue}>{groupedLists.length}</Text>
+                                <Text style={styles.statLabel}>Listas activas</Text>
+                            </View>
                         </View>
+                        
+                        <View style={styles.separator} />
+
                         <View style={styles.statBox}>
                             <View style={[styles.statCircle, { backgroundColor: '#eff6ff' }]}>
-                                <Ionicons name="basket" size={20} color="#1d4ed8" />
+                                <MaterialCommunityIcons name="basket-outline" size={24} color="#2563eb" />
                             </View>
-                            <Text style={styles.statValue}>{allProducts.length}</Text>
-                            <Text style={styles.statLabel}>Ítems</Text>
-                        </View>
-                        <View style={styles.statBox}>
-                            <View style={[styles.statCircle, { backgroundColor: '#fff7ed' }]}>
-                                <Ionicons name="time" size={20} color="#c2410c" />
+                            <View style={styles.statInfo}>
+                                <Text style={styles.statValue}>{allProducts.length}</Text>
+                                <Text style={styles.statLabel}>Productos</Text>
                             </View>
-                            <Text style={styles.statValue}>0m</Text>
-                            <Text style={styles.statLabel}>Tiempo</Text>
                         </View>
                     </View>
 
-                    {/* Añadido Rápido */}
-                    <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>Añadido <Text style={styles.boldText}>Rápido</Text></Text>
-                        <View style={styles.searchInputContainer}>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Ej: Manzanas 2kg..."
-                                placeholderTextColor="#94a3b8"
-                            />
-                            <TouchableOpacity style={styles.addInlineBtn}>
-                                <Ionicons name="add" size={24} color="#fff" />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
 
                     {/* Categorias */}
                     <View style={{ marginTop: 10 }}>
                         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipsPadding}>
-                            {['Todas', 'Frutas', 'Lácteos', 'Limpieza', 'Carnes'].map((category, index) => (
+                            <TouchableOpacity
+                                style={[styles.chip, activeFilter === 'Todas' && styles.activeChip]}
+                                onPress={() => setActiveFilter('Todas')}
+                            >
+                                <Text style={[styles.chipText, activeFilter === 'Todas' && styles.activeChipText]}>Todas</Text>
+                            </TouchableOpacity>
+                            {categorias.map((category) => (
                                 <TouchableOpacity
-                                    key={category}
-                                    style={[styles.chip, index === 0 && styles.activeChip]}
+                                    key={category.idcategorias}
+                                    style={[styles.chip, activeFilter === category.nombre && styles.activeChip]}
+                                    onPress={() => setActiveFilter(category.nombre)}
                                 >
-                                    <Text style={[styles.chipText, index === 0 && styles.activeChipText]}>{category}</Text>
+                                    <Text style={[styles.chipText, activeFilter === category.nombre && styles.activeChipText]}>
+                                        {category.nombre}
+                                    </Text>
                                 </TouchableOpacity>
                             ))}
                         </ScrollView>
@@ -158,10 +166,10 @@ export default function HomeScreen() {
                     {/* Lista */}
                     <View style={styles.section}>
                         <View style={styles.sectionHeader}>
-                            <Text style={styles.sectionTitle}>Tus <Text style={styles.boldText}>Listas Recientes</Text></Text>
-                            {groupedLists.length > 0 && (
+                            <Text style={styles.sectionTitle}>Últimos <Text style={styles.boldText}>Productos</Text></Text>
+                            {allProducts.length > 0 && (
                                 <TouchableOpacity onPress={() => router.push('/listarProductos')}>
-                                    <Text style={{ color: '#16a34a', fontWeight: '600' }}>Ver todas</Text>
+                                    <Text style={{ color: '#16a34a', fontWeight: '600' }}>Ver todo</Text>
                                 </TouchableOpacity>
                             )}
                         </View>
@@ -171,14 +179,15 @@ export default function HomeScreen() {
                                 <View style={styles.emptyIconContainer}>
                                     <MaterialCommunityIcons name="clipboard-text-outline" size={60} color="#cbd5e1" />
                                 </View>
-                                <Text style={styles.emptyTitle}>No hay listas creadas aún</Text>
-                                <Text style={styles.emptySubtitle}>Comienza pulsando el botón + para crear tu primera lista de compras.</Text>
+                                <Text style={styles.emptyTitle}>No hay productos aún</Text>
+                                <Text style={styles.emptySubtitle}>
+                                    {activeFilter === 'Todas' 
+                                        ? 'Agrega productos a tu carrito pulsando el botón +.' 
+                                        : `No hay productos en la categoría "${activeFilter}".`}
+                                </Text>
                             </View>
                         ) : (
-                            groupedLists.slice(0, 2).map((group, index) => {
-                                const date = new Date(group[0].created_at);
-                                const dateStr = date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-                                const timeStr = date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+                            groupedLists.flat().slice(0, 5).map((item, index) => {
                                 return (
                                     <TouchableOpacity
                                         key={index}
@@ -186,11 +195,17 @@ export default function HomeScreen() {
                                         onPress={() => router.push('/listarProductos')}
                                     >
                                         <View style={styles.cardImagePlaceholder}>
-                                            <MaterialCommunityIcons name="shopping-outline" size={22} color="#16a34a" />
+                                            {item.imagen_url ? (
+                                                <Image source={{ uri: item.imagen_url }} style={styles.productImg} />
+                                            ) : (
+                                                <MaterialCommunityIcons name="food-apple-outline" size={22} color="#16a34a" />
+                                            )}
                                         </View>
                                         <View style={styles.cardContent}>
-                                            <Text style={styles.cardTitle}>{dateStr} - {timeStr}</Text>
-                                            <Text style={styles.cardSubtitle}>{group.length} ítems • Lista de compra</Text>
+                                            <Text style={styles.cardTitle}>{item.nombre}</Text>
+                                            <Text style={styles.cardSubtitle}>
+                                                {item.cantidad} {item.cantidad > 1 ? 'unidades' : 'unidad'} • {item.comprado || 'Pendiente'}
+                                            </Text>
                                         </View>
                                         <Ionicons name="chevron-forward" size={18} color="#cbd5e1" />
                                     </TouchableOpacity>
